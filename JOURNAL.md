@@ -2,7 +2,42 @@
 
 Notes datées des passes de travail. Une entrée par session significative,
 focus sur ce qui a changé et **pourquoi**, pas sur "comment". Un changement
-de code est dans `git` (le futur) ; ici on capture le contexte décisionnel.
+de code est dans `git` ; ici on capture le contexte décisionnel.
+
+---
+
+## 2026-06-15 — CI pytest + publication GitHub
+
+**Levier.** Git venait d'être posé (entrée précédente) mais restait **local** :
+ni filet de sécurité automatique (les tests ne tournaient qu'à la main), ni
+sauvegarde hors-machine. Brancher une CI et publier le dépôt transforme « 32
+tests verts chez moi » en « 32 tests verts vérifiés à chaque push, pour tout
+le monde ». C'est la suite logique et le dernier maillon de l'armature.
+
+**Ce qui a été ajouté.**
+- `.github/workflows/ci.yml` — GitHub Actions : `pytest backend/tests` sur
+  `push` et `pull_request`, matrice Python 3.11 / 3.12 / 3.13. **Aucune chaîne
+  LaTeX installée** : choix permis par le fait que les tests Pyromaths sont
+  « sans compilation » (catalogue, reproductibilité par graine, injection du
+  template au niveau chaîne) — CI rapide (~15 s/job) et sans dépendance lourde.
+- Dépôt **public** publié : https://github.com/Elwazir38/FicheLab (GPLv3,
+  cohérent avec l'esprit libre du projet et Pyromaths vendorisé).
+
+**Vérification.**
+- Run CI `27571209872` : **✓ vert sur les 3 versions** (3.11/3.12/3.13).
+- `git ls-remote origin` : `master` présent, 3 commits poussés.
+
+**Frictions traversées (pour mémoire).**
+- `gh` installé mais hors PATH du shell → appelé par chemin complet.
+- Push initial **rejeté** : le token OAuth n'avait pas le scope `workflow`
+  (GitHub interdit de pousser `.github/workflows/` sans lui — défense contre
+  l'injection de CI). Résolu par `gh auth refresh -s workflow`.
+
+**Reste à faire (non bloquant).** Annotation GitHub : `checkout@v4` /
+`setup-python@v5` tournent sur Node 20 (déprécié, bascule Node 24 le
+16/06/2026) — avertissement seulement, la CI ne casse pas ; à relever lors
+d'une passe de maintenance. Toujours en suspens : dossier `fonts/` absent,
+`pyproject.toml` si la config se densifie.
 
 ---
 
