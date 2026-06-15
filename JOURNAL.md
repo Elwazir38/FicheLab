@@ -6,6 +6,55 @@ de code est dans `git` (le futur) ; ici on capture le contexte décisionnel.
 
 ---
 
+## 2026-06-15 — Mise sous contrôle de version + armature de projet
+
+**Levier.** L'outil était fonctionnel (32 tests verts) mais vivait **hors
+Git**, dans OneDrive — alors que toute la doctrine le présuppose : le JOURNAL
+parle de « git (le futur) », le CLAUDE.md exige que « toute règle durable
+s'écrive dans le dépôt », le README qualifie les fiches de « versionnables ».
+Sans dépôt : aucune historisation, aucun rollback, et un risque réel de
+corruption via la synchro OneDrive. C'était le manque n°1, en amont de tout
+le reste. Choix : poser l'armature manquante d'un coup plutôt que du code
+fonctionnel — la valeur ici est la traçabilité, pas une feature de plus.
+
+**Ce qui a été ajouté / corrigé.**
+- `git init` + commit initial (`95b836f`, 449 fichiers suivis).
+- `LICENSE` — **GPLv3**, texte officiel verbatim (réutilisé depuis
+  `engines/pyromaths/COPYING`). Choix dicté par la vendorisation de Pyromaths
+  (GPLv3) dans `engines/` : distribuer l'ensemble sous GPLv3 est le seul choix
+  juridiquement sûr. FicheLab déclarait scrupuleusement la licence *des autres*
+  (MathALEA AGPL non embarqué) mais n'avait pas la sienne.
+- `.gitignore` — `.venv`, caches Python, PDF temporaires, artefacts OneDrive.
+- `.gitattributes` — normalisation LF dans le dépôt.
+- **Pyromaths réellement vendorisé** : le `.git` imbriqué a été supprimé.
+  Avant, `git add` le voyait comme un *gitlink* (`Am engines/pyromaths`) — un
+  simple pointeur de sous-module, sans les fichiers. Après suppression :
+  **390 fichiers source tracés**. C'est ce qui rend le choix GPLv3 cohérent
+  (le code GPL est présent et tracé, pas juste référencé).
+- Nettoyage des sauvegardes manuelles `web/*.AVANT-design-web.*` (rôle rendu
+  obsolète par Git).
+- Dépendance de test déclarée : `requirements-dev.txt` (`pytest>=9.0`,
+  installé via `-r requirements.txt`) ; `requirements.txt` et la section
+  « Tests » du README pointent désormais dessus, au lieu du `pip install
+  pytest` en commentaire.
+
+**Vérification.**
+- `pytest backend\tests` : **32 passed** — inchangé avant/après la
+  vendorisation (le moteur Pyromaths s'importe et tourne toujours).
+- `git ls-files engines/pyromaths` : 390 fichiers (vendorisation réelle, pas
+  un gitlink). `git status` : arbre propre.
+- `pip install -r requirements-dev.txt --dry-run` : résolu sans conflit.
+
+**Frontière de licence — respectée.** Aucun code MathALEA (AGPL) embarqué.
+Pyromaths (GPLv3) est vendorisé *et* la distribution est désormais sous GPLv3,
+ce qui lève l'ambiguïté précédente (code GPL présent sans licence déclarée).
+
+**Reste à faire (non bloquant).** Dossier `fonts/` documenté mais absent
+(doc ≠ réalité) ; pas de CI (possible maintenant que Git existe, utile si
+push distant) ; envisager `pyproject.toml` si la config se densifie.
+
+---
+
 ## 2026-06-14 — Bibliothèque d'amorce 6e–3e (16 fiches)
 
 **Levier.** Avant ce passage, FicheLab livrait 2 fiches d'exemple

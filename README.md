@@ -54,7 +54,7 @@ Puis ouvrir **http://localhost:8000**.
 ## Tests
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install pytest
+.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 .\.venv\Scripts\python.exe -m pytest backend\tests -q
 ```
 
