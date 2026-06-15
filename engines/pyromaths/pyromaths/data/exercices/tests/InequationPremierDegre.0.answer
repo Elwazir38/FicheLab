@@ -1,0 +1,22 @@
+\exercice*
+
+\begin{align*}
+\numprint{3}\,x+\numprint{4} & ≥ \numprint{-8}\,x-\numprint{1} \\
+    \numprint{3}\,x+\numprint{4} \textcolor{blue}{\numprint{+8}\,x} & ≥ \numprint{-8}\,x-\numprint{1} \textcolor{blue}{\numprint{+8}\,x}\\
+\numprint{11}\,x+\numprint{4} & ≥ -\numprint{1} \\
+    \numprint{11}\,x+\numprint{4} \textcolor{blue}{-\numprint{4}} & ≥ -\numprint{1} \textcolor{blue}{-\numprint{4}}\\
+\numprint{11}\,x & ≥ -\numprint{5} \\
+    \numprint{11}\,x \textcolor{blue}{\div \numprint{11}} & ≥ -\numprint{5} \textcolor{blue}{\div \numprint{11}}\\
+  x & ≥ -\frac{\numprint{5}}{\numprint{11}} \\
+\end{align*}
+
+Les solutions sont donc $x≥-\frac{\numprint{5}}{\numprint{11}}$, dont voici la représentation sur la droite des réels.
+
+\begin{center}
+  \begin{tikzpicture}[line width=2pt]
+    \draw[-Stealth] (0, 0) -- (10, 0);\draw(6, .2) -- (6, -.2) node[below]{0};\draw[blue, arrows={Bracket[scale=1.5]-},yshift=-2pt]
+(3, 0)       node[below=.5em]{$-\frac{\numprint{5}}{\numprint{11}}$}
+      --
+ (9.6, 0)       ;
+  \end{tikzpicture}
+\end{center}

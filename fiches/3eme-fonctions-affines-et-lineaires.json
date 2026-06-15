@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "titre": "3ème — Fonctions affines et linéaires",
+  "entete": {
+    "classe": "",
+    "date": ""
+  },
+  "mise_en_page": {
+    "colonnes": 2,
+    "corrige": true,
+    "vue": "eleve"
+  },
+  "exercices": [
+    {
+      "id": "3F10",
+      "n": 3,
+      "uuid": "30941",
+      "alea": "a941"
+    },
+    {
+      "id": "3F12",
+      "n": 3,
+      "uuid": "30942",
+      "alea": "a942"
+    },
+    {
+      "id": "3F21",
+      "n": 3,
+      "uuid": "30943",
+      "alea": "a943"
+    }
+  ]
+}

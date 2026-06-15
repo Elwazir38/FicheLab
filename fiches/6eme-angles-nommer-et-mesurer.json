@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "titre": "6ème — Angles : nommer et mesurer",
+  "entete": {
+    "classe": "",
+    "date": ""
+  },
+  "mise_en_page": {
+    "colonnes": 2,
+    "corrige": true,
+    "vue": "eleve"
+  },
+  "exercices": [
+    {
+      "id": "6G22-1",
+      "n": 3,
+      "uuid": "60631",
+      "alea": "a631"
+    },
+    {
+      "id": "6G22",
+      "n": 3,
+      "uuid": "60632",
+      "alea": "a632"
+    },
+    {
+      "id": "6G23-4",
+      "n": 3,
+      "uuid": "60634",
+      "alea": "a633"
+    }
+  ]
+}

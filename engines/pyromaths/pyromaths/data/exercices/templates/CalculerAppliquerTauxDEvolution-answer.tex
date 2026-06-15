@@ -1,0 +1,87 @@
+\exercice*
+
+\begin{enumerate}
+  (* for i in ordre *)
+    (* if i == 0 *)
+      \item On calcule le taux d'évolution avec la formule :
+        \[
+          \frac{\text{Valeur finale} - \text{Valeur initiale}}{\text{Valeur initiale}}=\frac{(( finale0 )) - (( initiale0 ))}{(( initiale0 ))}=\frac{(( finale0 - initiale0 ))}{(( initiale0 ))}=(( (taux0 / 100)|facteur("2") ))=(( taux0 ))\%
+        \]
+        (* if contexte == 0 *)
+          Le chiffre d'affaires a donc (* if taux0 > 0 *)augmenté(* else *)diminué(* endif *) de (( taux0|abs ))\%.
+        (* elif contexte == 1 *)
+          La production hebdomadaire de vélos a donc (* if taux0 > 0 *)augmenté(* else *)diminué(* endif *) de (( taux0|abs ))\%.
+        (* elif contexte == 2 *)
+          La population de loups a donc (* if taux0 > 0 *)augmenté(* else *)diminué(* endif *) de (( taux0|abs ))\%.
+        (* elif contexte == 3 *)
+          Le nombre d'ouvrages a donc (* if taux0 > 0 *)augmenté(* else *)diminué(* endif *) de (( taux0|abs ))\%.
+        (* else *)
+          Le nombre d'adhérents a donc (* if taux0 > 0 *)augmenté(* else *)diminué(* endif *) de (( taux0|abs ))\%.
+        (* endif *)
+    (* elif i == 1 *)
+      \item
+          (* if taux1 > 0 *)Augmenter(* else *)Diminuer(* endif *) une valeur de (( taux1|abs ))\% revient à la multiplier par $1(( taux1 | signe ))\frac{(( taux1|abs ))}{100}=1(( (taux1/100)|facteur("s") ))=(( mult1|facteur ))$.
+          Donc la nouvelle valeur est $(( initiale1 ))\times (( mult1|facteur ))=(( finale1 ))$.
+          (* if contexte == 0 *)
+          L'année suivante, le chiffre d'affaires était donc de (( finale1 )) milliers d'euros.
+          (* elif contexte == 1 *)
+          L'année suivante, l'usine produisait donc (( finale1 )) vélos par semaine.
+          (* elif contexte == 2 *)
+          Il y avait l'année suivante (( finale1 )) loups dans le parc.
+          (* elif contexte == 3 *)
+          Il y avait l'année suivante (( finale1 )) milliers d'ouvrages dans la bibliothèque.
+          (* elif contexte == 4 *)
+          Il y avait l'année suivante (( finale1 )) adhérents au club de basket.
+          (* endif *)
+    (* else *)
+      \item Complétons le schéma suivant.
+        \begin{center}
+          \begin{tikzpicture}
+            \node[draw=black, circle, inner sep=0pt, minimum size=2em] (initial) at (0, 0) {?};
+            \node[draw=black, circle, inner sep=0pt, minimum size=2em] (final) at (3, 0) {$(( finale2 ))$};
+            \draw[-Stealth, bend left] (initial) to node[above] {$(( taux2|facteur("s") ))\%$} node[below]{$\times?$} (final);
+            \draw[-Stealth, bend left] (final)   to node[below]{$?$} (initial);
+          \end{tikzpicture}
+        \end{center}
+        La valeur initiale est inconnue, mais après une (* if taux2 > 0 *)augmentation(* else *)diminution(* endif *) de (( taux2|abs ))\%, la valeur finale est (( finale2 )). Or, (* if taux2 > 0 *)augmenter(* else *)diminuer(* endif *) une valeur de (( taux2|abs ))\% revient à la multiplier par $1(( taux2|signe ))\frac{(( taux2|abs ))}{100}=1(( (taux2/100)|facteur("s") ))=(( mult2|facteur ))$. En d'autres termes, pour passer de la valeur initiale à la valeur finale, on l'a multipliée par (( mult2|facteur )). Pour revenir à la valeur initiale, il faut donc diviser la valeur finale par (( mult2|facteur )), ce qui donne :
+        (* if taux2 == -25 *)
+        \[
+        \frac{(( finale2 ))}{(( mult2|facteur ))}
+        =\frac{(( finale2 ))}{3/4}
+        =(( finale2 ))\times\frac{4}{3}
+        =\frac{(( finale2 ))}{3}\times4
+        =(( (finale2/3)|facteur ))\times4
+        =(( initiale2 ))
+        \]
+        (* else *)
+        \[
+        \frac{(( finale2 ))}{(( mult2|facteur ))}
+        =\frac{(( finale2 * 10 ))}{(( (mult2*10)|facteur ))}
+        =\frac{(( finale2 // 10 )) \times 100}{(( (mult2*10)|facteur ))}
+        =\frac{\cancel{(( (mult2 * 10)|facteur ))}\times (( (finale2 // (100 * mult2))|facteur )) \times 100}{\cancel{(( (mult2*10)|facteur ))}}
+        =(( initiale2 ))
+        \]
+        (* endif *)
+    
+        \begin{center}
+          \begin{tikzpicture}
+            \node[draw=black, circle, inner sep=0pt, minimum size=2em] (initial) at (0, 0) {$(( initiale2 ))$};
+            \node[draw=black, circle, inner sep=0pt, minimum size=2em] (final) at (3, 0) {$(( finale2 ))$};
+            \draw[-Stealth, bend left] (initial) to node[above] {$(( taux2|facteur("s") ))\%$} node[below]{$\times(( mult2|facteur ))$} (final);
+            \draw[-Stealth, bend left] (final)   to node[below]{$\div(( mult2|facteur ))$} (initial);
+          \end{tikzpicture}
+        \end{center}
+        (* if contexte == 0 *)
+          En (( annee2 )), le chiffre d'affaires de l'entreprise était donc de (( initiale2 )) milliers d'euros.
+        (* elif contexte == 1 *)
+          En (( annee2 )), l'usine a donc produit (( initiale2 )) vélos par semaine.
+        (* elif contexte == 2 *)
+          En (( annee2 )), il y avait donc (( initiale2 )) loups dans le parc.
+        (* elif contexte == 3 *)
+          En (( annee2 )), la bibliothèque possédait donc (( initiale2 )) milliers d'ouvrages.
+        (* else *)
+          En (( annee2 )), le club réunissait donc (( initiale2 )) adhérents.
+        (* endif *)
+    (* endif *)
+  (* endfor *)
+\end{enumerate}

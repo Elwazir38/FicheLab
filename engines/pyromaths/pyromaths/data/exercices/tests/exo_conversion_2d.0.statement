@@ -1,0 +1,12 @@
+\exercice
+Effectuer les conversions suivantes :
+\begin{multicols}{3}\noindent
+\begin{enumerate}
+\item $\SI{96,5}{dam^2}=\dotfill\si{dm^2}$
+\item $\SI{59,8}{dam^2}=\dotfill\si{m^2}$
+\item $\SI{4,67}{dam^2}=\dotfill\si{hm^2}$
+\item $\SI{8,74}{dm^2}=\dotfill\si{mm^2}$
+\item $\SI{3,57}{dam^2}=\dotfill\si{km^2}$
+\item $\SI{8,48}{m^2}=\dotfill\si{dm^2}$
+\end{enumerate}
+\end{multicols}

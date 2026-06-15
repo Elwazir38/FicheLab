@@ -1,0 +1,9 @@
+# Normalisation des fins de ligne : LF dans le dépôt, natif au checkout.
+* text=auto
+
+# Fichiers binaires : pas de conversion.
+*.pdf binary
+*.ttf binary
+*.otf binary
+*.png binary
+*.jpg binary

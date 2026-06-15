@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "titre": "6ème — Périmètres et aires",
+  "entete": {
+    "classe": "",
+    "date": ""
+  },
+  "mise_en_page": {
+    "colonnes": 2,
+    "corrige": true,
+    "vue": "eleve"
+  },
+  "exercices": [
+    {
+      "id": "6M11-3",
+      "n": 3,
+      "uuid": "6M113",
+      "alea": "a621"
+    },
+    {
+      "id": "6M11",
+      "n": 3,
+      "uuid": "6M111",
+      "alea": "a622"
+    },
+    {
+      "id": "6M10",
+      "n": 2,
+      "uuid": "6M101",
+      "alea": "a623"
+    }
+  ]
+}

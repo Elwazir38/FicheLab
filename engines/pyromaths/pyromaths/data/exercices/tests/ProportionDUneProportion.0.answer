@@ -1,0 +1,11 @@
+\exercice*
+
+La proportion de vélos de l'usine vendus à l'étranger est :
+
+\begin{align*}
+    \frac{20}{100} \times \frac{8}{100}
+    &= \frac{20\times8}{100\times 100}\\
+    &= \frac{160}{100 \times 100} \\
+    &= \frac{\numprint{1.6}}{100} \\
+    &= \numprint{1.6} \%
+\end{align*}

@@ -1,0 +1,101 @@
+\exercice*
+
+\begin{enumerate}
+
+    (* for question in questions *)
+    (* set q=questions[question] *)
+  \item
+  % (( question ))
+    % (( q ))
+
+    (* if question == "appliquer1" *)
+    $(( q.a ))/(( q.b ))$ de \SI{(( q.c ))}{(( q.u ))} est égal à :
+      \begin{align*}
+        \frac{(( q.a ))}{(( q.b ))}\times \numprint{(( q.c ))}
+        &=\frac{(( q.a ))\times  \numprint{(( q.c ))}}{(( q.b ))}\\
+        &=\frac{(( q.a ))\times \numprint{(( q.c//q.b ))}\times\cancel{(( q.b ))}}{\cancel{(( q.b ))}}\\
+        &=(( q.a ))\times \numprint{(( q.c//q.b ))}\\
+        &=\numprint{(( q.a * q.c // q.b ))}
+      \end{align*}
+      La réponse est donc \SI{(( q.a * q.c // q.b ))}{(( q.u ))}.
+    (* endif *)
+
+    (* if question == "appliquer2" *)
+    Le nombre de cadres dans l'entreprise est : $
+  (( q.employes ))\times\frac{(( q.pourcent ))}{100}
+  =
+  \frac{(( q.employes )) \times (( q.pourcent ))}{100}
+  =
+  \frac{(( q.employes // 10 )) \times \cancel{10} \times (( q.pourcent // 10 )) \times \cancel{10}}{\cancel{10}\times\cancel{10}}
+  =
+  (( q.employes * q.pourcent // 100 ))
+    $.
+
+    (* endif *)
+
+    (* if question == "inverse1" *)
+    On peut résoudre cela avec un tableau de proportionnalité :
+    \begin{center}
+      \begin{tabular}{|l|c|c|}
+        \hline
+        Partie & (( q.partie )) & (( q.pourcent )) \\
+        \hline
+        Total  & (( q.lettre )) & 100\\
+        \hline
+      \end{tabular}
+    \end{center}
+    La valeur manquante (( q.lettre )) vaut donc :
+    \begin{align*}
+      (( q.lettre ))
+      &= \frac{(( q.partie )) \times 100}{(( q.pourcent ))} \\
+      &= \frac{(( q.partie * 10 // q.pourcent )) \times \cancel{(( q.pourcent // 10 ))} \times \cancel{10} \times 10}{\cancel{(( q.pourcent // 10))} \times \cancel{10}}\\
+      &= (( q.total ))
+    \end{align*}
+    La quantité (( q.lettre )) vaut donc $(( q.total ))$.
+    (* endif *)
+
+    (* if question == "calculer1" *)
+    La proportion de femmes dans l'entreprise est :
+    $
+    \frac{(( q.femmes ))}{(( q.employes ))}
+    =\frac{(( q.femmes // q.pgcd ))\times\cancel{(( q.pgcd ))}}{(( q.employes // q.pgcd ))\times\cancel{(( q.pgcd ))}}
+    =\frac{(( q.femmes // q.pgcd ))}{(( q.employes // q.pgcd ))}
+    (* if 100*((q.femmes / q.employes)|round(2)) == 100 * (q.femmes / q.employes)  *)
+    =(( (q.femmes / q.employes)|facteur() ))
+    =(( (q.femmes / q.employes * 100)|facteur() ))\%
+    (* else *)
+    \approx (( (q.femmes / q.employes)|facteur("2") ))
+    \approx (( (q.femmes / q.employes * 100)|facteur("0") ))\%
+    (* endif *)
+    $.
+    (* endif *)
+
+    (* if question == "calculer2" *)
+    \begin{enumerate}
+      \item Parmi (( q.notes.values()|sum )) élèves, (( q.notes[q.note] )) élèves ont eu (( q.note )) sur 5, soit :
+        $\frac{(( q.notes[q.note] ))}{(( q.notes.values()|sum ))}=(( (q.notes[q.note]/(q.notes.values()|sum))|facteur() ))=(( (q.notes[q.note]/(q.notes.values()|sum)*100)|facteur() )) \%$.
+      \item Parmi (( q.notes.values()|sum )) élèves, $
+        (* for n in range(q.seuil, 6) *)
+          (( q.notes[n] ))
+          (* if not loop.last *)+(* endif *)
+        (* endfor *)
+        =
+        (( q.audessusduseuil ))
+        $ élèves ont eu plus de (( q.seuil )) sur 5, soit :
+        $\frac{((q.audessusduseuil))}{(( q.notes.values()|sum ))}=(( (q.audessusduseuil/(q.notes.values()|sum))|facteur() ))=(( (q.audessusduseuil/(q.notes.values()|sum)*100)|facteur() )) \%$.
+    \end{enumerate}
+    (* endif *)
+
+    (* if question == "calculer3" *)
+    Les $\frac{(( q.a ))}{(( q.b ))}$ des $\frac{(( q.b ))}{(( q.c ))}$ de (( q.prix )) € donnent :
+    \begin{align*}
+      \frac{(( q.a ))}{(( q.b ))}\times\frac{(( q.b ))}{(( q.c ))}\times(( q.prix ))
+      &= \frac{(( q.a )) \times \cancel{(( q.b ))} \times (( q.prix ))}{\cancel{(( q.b ))} \times (( q.c ))} \\
+      &= (( (q.a * q.prix) // q.c ))
+    \end{align*}
+    Le résultat est donc (( (q.a * q.prix) // q.c )) €.
+    (* endif *)
+
+  (* endfor *)
+
+\end{enumerate}

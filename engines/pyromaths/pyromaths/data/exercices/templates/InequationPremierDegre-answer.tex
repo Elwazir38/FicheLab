@@ -1,0 +1,31 @@
+\exercice*
+
+\begin{align*}
+  (* for gauche, signe, droite, opération in etapes -*)
+    (( gauche )) & (( signe )) (( droite )) \\
+    (( gauche )) \textcolor{blue}{(( opération ))} & (* if loop.last *)(( solution.symbole ))(* else *)(( signe ))(* endif *) (( droite )) \textcolor{blue}{(( opération ))}\\
+  (* endfor *)
+  x & (( solution.symbole )) (( solution.valeur|tex )) \\
+\end{align*}
+
+Les solutions sont donc $x((solution.symbole))((solution.valeur|tex))$, dont voici la représentation sur la droite des réels.
+
+\begin{center}
+  \begin{tikzpicture}[line width=2pt]
+    \draw[-Stealth] (0, 0) -- (10, 0);
+      (*- if solution.valeur > 0 -*)
+        \draw(3, .2) -- (3, -.2) node[below]{0};
+      (*- endif -*)
+      (*- if solution.valeur < 0 -*)
+        \draw(6, .2) -- (6, -.2) node[below]{0};
+      (*- endif -*)
+    \draw[blue, arrows={Bracket[scale=1.5
+          (*- if solution.symbole in "<>" -*),reversed(*- endif -*)
+      ]-},yshift=-2pt]
+      (* if solution.valeur < 0 -*) (3, 0) (* else *) (6, 0) (* endif *)
+      node[below=.5em]{$(( solution.valeur|tex ))$}
+      --
+      (* if solution.symbole in "<≤" *) (0, 0) (* else *) (9.6, 0) (* endif *)
+      ;
+  \end{tikzpicture}
+\end{center}

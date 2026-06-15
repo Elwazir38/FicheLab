@@ -1,0 +1,91 @@
+\exercice*
+
+Commençons par résoudre séparément les deux inéquations.
+
+\begin{minipage}[b]{.4\textwidth}
+\begin{align*}
+  (* for gauche, signe, droite, opération in etapes1 -*)
+    (( gauche )) & (( signe )) (( droite )) \\
+    (( gauche )) \textcolor{blue}{(( opération ))} & (* if loop.last *)(( solution1.symbole ))(* else *)(( signe ))(* endif *) (( droite )) \textcolor{blue}{(( opération ))}\\
+  (* endfor *)
+  x & (( solution1.symbole )) (( solution1.valeur|tex )) \\
+\end{align*}
+\end{minipage}%
+\hfill%
+\begin{minipage}[b]{.4\textwidth}
+\begin{align*}
+  (* for gauche, signe, droite, opération in etapes2 -*)
+    (( gauche )) & (( signe )) (( droite )) \\
+    (( gauche )) \textcolor{blue}{(( opération ))} & (* if loop.last *)(( solution2.symbole ))(* else *)(( signe ))(* endif *) (( droite )) \textcolor{blue}{(( opération ))}\\
+  (* endfor *)
+  x & (( solution2.symbole )) (( solution2.valeur|tex )) \\
+\end{align*}
+\end{minipage}%
+
+Les solutions sont donc \textcolor{blue}{$x((solution1.symbole))((solution1.valeur|tex))$} (( etou )) \textcolor{Green}{$x((solution2.symbole))((solution2.valeur|tex))$}, dont voici la représentation sur la droite des réels.
+
+\begin{center}
+    \begin{tikzpicture}[line width=2pt, xscale=(* if (max-min)/5 >= 4 *)0.5(* elif (max-min)/5 == 3 *).75(* elif (max-min)/5 == 2 *)1(* else *)2(* endif *)]
+      \draw[-Stealth] ( (( min-1 )), 0) -- ( (( max+1 )), 0);
+      \foreach \x in { (( min )), (( min + 5 )), ..., (( max ))}{
+          \draw (\x, -.2) -- (\x, .2);
+          \path (\x, 0) node[above=5pt]{$\x$};
+      }
+      \foreach \x in { (( min )), ..., (( max ))}{
+          \draw[line width=1.5pt] (\x, -.15) -- (\x, .15);
+      }
+      \begin{scope}[blue]
+          \path ( (( solution1.valeur )), 0) node[below=9pt]{$(( solution1.valeur|tex ))$};
+          \draw[arrows={Bracket[scale=1.5, inset=3pt,
+                (*- if solution1.symbole in "<>" -*),reversed(*- endif -*)
+               ]-},yshift=-2pt]
+               ($
+                  ( (( solution1.valeur )), 0)
+                  +
+                  (* if solution1.symbole in "<" *)
+                      (4.5pt, 0)
+                  (* elif solution1.symbole in ">" *)
+                      (-4.5pt, 0)
+                  (* elif solution1.symbole in "≤" *)
+                      (.5pt, 0)
+                  (* elif solution1.symbole in "≥" *)
+                      (-.5pt, 0)
+                  (* endif *)
+               $)
+               --
+               (* if solution1.symbole in "<≤" *) ( (( min - 1 )), 0) (* else *) ( (( max + 0.6 )), 0) (* endif *)
+               ;
+      \end{scope}
+      \begin{scope}[Green]
+          \path ( (( solution2.valeur )), 0) node[below=9pt]{$(( solution2.valeur|tex ))$};
+          \draw[arrows={Bracket[scale=1.5
+                (*- if solution2.symbole in "<>" -*),reversed(*- endif -*)
+               ]-},yshift=-4pt]
+               ($
+                  ( (( solution2.valeur )), 0)
+                  +
+                  (* if solution2.symbole in "<" *)
+                      (4.5pt, 0)
+                  (* elif solution2.symbole in ">" *)
+                      (-4.5pt, 0)
+                  (* elif solution2.symbole in "≤" *)
+                      (.5pt, 0)
+                  (* elif solution2.symbole in "≥" *)
+                      (-.5pt, 0)
+                  (* endif *)
+               $)
+               --
+               (* if solution2.symbole in "<≤" *) ( (( min - 1 )), 0) (* else *) ( (( max + 0.6 )), 0) (* endif *)
+               ;
+      \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Puisque nous voulons
+(* if etou == "et" *) l'intersection (* else *) l'union (* endif *)
+des deux solutions (car $x((solution1.symbole))((solution1.valeur|tex))$ \textbf{(( etou ))} $x((solution2.symbole))((solution2.valeur|tex))$), alors nous cherchons les parties de la droite des réels surlignées
+(* if etou == "et" *) deux (* else *) au moins une (* endif *)
+fois. Les solutions sont donc :
+\[
+    x \in ((solution|tex))
+\]

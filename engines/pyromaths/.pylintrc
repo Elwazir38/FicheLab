@@ -1,0 +1,12 @@
+[VARIABLES]
+dummy-variables-rgx=__|^_.*|dummy
+good-names=i,j,x,y,z
+
+[MESSAGES CONTROL]
+disable=
+  logging-fstring-interpolation,
+  consider-using-f-string,
+  duplicate-code,
+  line-too-long,
+  # Let black handle formatting
+  bad-continuation,

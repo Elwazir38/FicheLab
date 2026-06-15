@@ -1,0 +1,18 @@
+\exercice
+
+Dans un repère orthonormé, on considère les points $P(1,-3)$, $Q(3,-9)$ et $R(9,-7)$.
+
+\begin{enumerate}
+  \item
+\begin{enumerate}
+  \item Déterminer les coordonnées de $I$, milieu de $[PR]$.
+  \item Déterminer les coordonnées de $S$, symétrique de $Q$ par rapport à $I$.
+  \item En déduire que $PQRS$ est un parallélogramme.
+\end{enumerate}
+\item
+\begin{enumerate}
+  \item Calculer la longueur $QR$.
+  \item On admet que $PQ=2\sqrt{10}$ et $PR=4\sqrt{5}$. Le triangle $PQR$ est-il équilatéral ? isocèle en $Q$ ? rectangle en $Q$ ?
+\end{enumerate}
+\item Préciser, si possible, la nature du parallélogramme $PQRS$.
+\end{enumerate}

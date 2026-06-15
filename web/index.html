@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FicheLab — composeur de fiches de maths</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- décor d'ambiance non-interactif (n'intercepte aucun clic, aria-hidden) -->
+  <div class="ambient" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="brand">Fiche<span>Lab</span></div>
+    <div class="tagline">Compose tes fiches d'exercices — moteur MathALEA · PDF prêt à imprimer</div>
+    <div class="spacer"></div>
+    <div class="actions">
+      <button class="btn ghost small" id="btn-nouvelle">＋ Nouvelle</button>
+      <button class="btn ghost small" id="btn-charger">📂 Charger</button>
+      <button class="btn ghost small" id="btn-dupliquer">⧉ Dupliquer</button>
+      <button class="btn primary small" id="btn-enregistrer">💾 Enregistrer</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <!-- Colonne 1 : catalogue -->
+    <section class="col">
+      <div class="col-head">
+        <div style="display:flex;align-items:center;gap:8px">
+          <h2 style="margin:0">Catalogue</h2>
+          <div class="src-tabs" id="src-tabs" style="margin-left:auto">
+            <button data-src="mathalea" class="active">MathALEA</button>
+            <button data-src="pyromaths">Pyromaths</button>
+          </div>
+        </div>
+        <div class="level-tabs" id="level-tabs"></div>
+        <input class="search" id="search" type="search" placeholder="Rechercher un exercice, un code…">
+      </div>
+      <div class="col-body" id="catalogue"></div>
+    </section>
+
+    <!-- Colonne 2 : constructeur -->
+    <section class="col">
+      <div class="col-head"><h2>Fiche</h2></div>
+      <div class="col-body">
+        <div class="fiche-meta">
+          <div class="field full">
+            <label for="f-titre">Titre de la fiche</label>
+            <input id="f-titre" type="text" placeholder="4ème — Fractions — Fiche 1">
+          </div>
+          <div class="field">
+            <label for="f-classe">Classe</label>
+            <input id="f-classe" type="text" placeholder="4ème B">
+          </div>
+          <div class="field">
+            <label for="f-date">Date</label>
+            <input id="f-date" type="date">
+          </div>
+          <div class="field">
+            <label for="f-cols">Colonnes</label>
+            <select id="f-cols">
+              <option value="1">1 colonne</option>
+              <option value="2" selected>2 colonnes</option>
+              <option value="3">3 colonnes</option>
+            </select>
+          </div>
+          <div class="field toggle">
+            <input id="f-corrige" type="checkbox" checked>
+            <label for="f-corrige">Inclure le corrigé détaillé</label>
+          </div>
+        </div>
+
+        <div class="exos-head">
+          <h3>Exercices</h3><span class="pill" id="exo-count">0</span>
+        </div>
+        <div id="fiche-exos"></div>
+        <div class="empty" id="fiche-empty">
+          <div class="big">🧮</div>
+          Clique sur un exercice du catalogue pour l'ajouter à ta fiche.
+        </div>
+      </div>
+    </section>
+
+    <!-- Colonne 3 : aperçu -->
+    <section class="col">
+      <div class="col-head">
+        <h2>Aperçu</h2>
+        <div class="view-tabs" id="view-tabs">
+          <button data-vue="eleve" class="active">Élève</button>
+          <button data-vue="diaporama">Diaporama</button>
+          <button data-vue="latex">LaTeX / PDF</button>
+        </div>
+      </div>
+      <div class="preview-wrap">
+        <iframe id="preview" title="Aperçu MathALEA"></iframe>
+        <div class="preview-hint" id="preview-hint">L'aperçu apparaîtra ici dès qu'un exercice est ajouté.</div>
+      </div>
+      <div class="preview-foot">
+        <button class="btn small ghost" id="btn-refresh">↻ Rafraîchir</button>
+        <div class="spacer"></div>
+        <button class="btn small" id="btn-onglet">↗ Ouvrir dans un onglet</button>
+        <button class="btn" id="btn-pdf">📄 PDF MathALEA</button>
+        <button class="btn ok" id="btn-pdf-local">📄 PDF Pyromaths (local)</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal « Charger une fiche » -->
+  <div class="modal-back" id="modal-charger">
+    <div class="modal">
+      <h3>Charger une fiche</h3>
+      <div id="fiche-list"></div>
+      <div style="text-align:right;margin-top:16px">
+        <button class="btn ghost" id="modal-close">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

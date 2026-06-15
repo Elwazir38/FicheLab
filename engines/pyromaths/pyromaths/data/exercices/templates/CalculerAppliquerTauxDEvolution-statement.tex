@@ -1,0 +1,129 @@
+\exercice
+\emph{Les trois questions sont indépendantes.}
+
+(* if contexte == 0 *)
+
+    On étudie le chiffre d'affaires d'une entreprise, en milliers d'euros.
+
+    \begin{enumerate}
+      (* for question in ordre *)
+        (* if question == 0 *)
+          \item
+            Entre (( annee0 )) et (( annee0 + 1 )),
+            le chiffre d'affaires est passé de (( initiale0 )) à (( finale0 )) milliers d'euros.
+            Calculer le taux d'évolution, en pourcentage.
+        (* elif question == 1 *)
+          \item
+              En (( annee1 )), le chiffre d'affaires était de (( initiale1 )) milliers d'euros.
+              L'année suivante, ce chiffre d'affaires a (* if taux1 > 0 *)augmenté(* else *)diminué(* endif *) de (( taux1|abs ))\%.
+              Quel était le chiffre d'affaires en (( annee1 + 1 )) ?
+        (* else *)
+          \item
+              En (( annee2 + 1 )), le chiffre d'affaires était de (( finale2 )) milliers d'euros,
+              ce qui constitue une (* if taux2 > 0 *)augmentation(* else *)diminution(* endif *) de (( taux2|abs ))\% par rapport à l'année précédente.
+              Quel était le chiffre d'affaires en (( annee2 )) ?
+        (* endif *)
+      (* endfor *)
+    \end{enumerate}
+
+(* elif contexte == 1 *)
+
+    On s'intéresse au nombre de vélos fabriqués chaque semaine par une usine.
+
+    \begin{enumerate}
+      (* for question in ordre *)
+        (* if question == 0 *)
+          \item
+            Entre (( annee0 )) et (( annee0 + 1 )),
+            la production est passée de (( initiale0 )) à (( finale0 )) vélos par semaine.
+            Calculer le taux d'évolution, en pourcentage.
+        (* elif question == 1 *)
+          \item
+              En (( annee1 )), l'usine a produit (( initiale1 )) vélos par semaine.
+              L'année suivante, la production a (* if taux1 > 0 *)augmenté(* else *)diminué(* endif *) de (( taux1|abs ))\%.
+              Quelle était la production de vélos par semaine en (( annee1 + 1 )) ?
+        (* else *)
+          \item
+              En (( annee2 + 1 )), l'usine a produit (( finale2 )) vélos par semaine,
+              ce qui constitue une (* if taux2 > 0 *)augmentation(* else *)diminution(* endif *) de (( taux2|abs ))\% par rapport à l'année précédente.
+            Quelle était la production hebdomadaire de vélos en (( annee2 )) ?
+        (* endif *)
+      (* endfor *)
+    \end{enumerate}
+
+(* elif contexte == 2 *)
+
+    Des scientifiques étudient la population de loups dans un parc naturel.
+
+    \begin{enumerate}
+      (* for question in ordre *)
+        (* if question == 0 *)
+          \item
+            Entre (( annee0 )) et (( annee0 + 1 )),
+            la population est passée de (( initiale0 )) à (( finale0 )) individus.
+            Calculer le taux d'évolution, en pourcentage.
+        (* elif question == 1 *)
+          \item
+              En (( annee1 )), il y avait (( initiale1 )) loups dans le parc.
+              L'année suivante, la population a (* if taux1 > 0 *)augmenté(* else *)diminué(* endif *) de (( taux1|abs ))\%.
+              Combien de loups y avait-il en (( annee1 + 1 )) ?
+        (* else *)
+          \item
+            En (( annee2 + 1 )), les scientifiques ont compté (( finale2 )) loups dans le parc,
+            ce qui constitue une (* if taux2 > 0 *)augmentation(* else *)diminution(* endif *) de (( taux2|abs ))\% par rapport à l'année précédente.
+            Combien y avait-il de loups en (( annee2 )) ?
+        (* endif *)
+      (* endfor *)
+    \end{enumerate}
+
+(* elif contexte == 3 *)
+
+    On fait l'inventaire du nombre d'ouvrages présents dans une bibliothèque municipale, en milliers.
+
+    \begin{enumerate}
+      (* for question in ordre *)
+        (* if question == 0 *)
+          \item
+            Entre (( annee0 )) et (( annee0 + 1 )),
+            le nombre d'ouvrages est passé de (( initiale0 )) à (( finale0 )) milliers.
+            Calculer le taux d'évolution, en pourcentage.
+        (* elif question == 1 *)
+          \item
+              En (( annee1 )), il y avait (( initiale1 )) milliers d'ouvrages.
+              L'année suivante, ce nombre a (* if taux1 > 0 *)augmenté(* else *)diminué(* endif *) de (( taux1|abs ))\%.
+              Combien d'ouvrages y avait-il dans la bibliothèque en (( annee1 + 1 )) ?
+        (* else *)
+          \item
+            En (( annee2 + 1 )), la bibliothèque contenait (( finale2 )) milliers d'ouvrages,
+            ce qui constitue une (* if taux2 > 0 *)augmentation(* else *)diminution(* endif *) de (( taux2|abs ))\% par rapport à l'année précédente.
+            Combien y avait-il d'ouvrages en (( annee2 )) ?
+        (* endif *)
+      (* endfor *)
+    \end{enumerate}
+
+(* else *)
+
+    On étudie le nombre d'adhérents d'un club de basket.
+
+    \begin{enumerate}
+      (* for question in ordre *)
+        (* if question == 0 *)
+          \item
+            Entre (( annee0 )) et (( annee0 + 1 )),
+            le nombre d'adhérents est passé de (( initiale0 )) à (( finale0 )) sportifs.
+            Calculer le taux d'évolution, en pourcentage.
+        (* elif question == 1 *)
+          \item
+              En (( annee1 )), il y avait (( initiale1 )) adhérents.
+              L'année suivante, ce nombre a (* if taux1 > 0 *)augmenté(* else *)diminué(* endif *) de (( taux1|abs ))\%.
+              Combien y avait-il d'adhérents (( annee1 + 1 )) ?
+        (* else *)
+          \item
+              En (( annee2 + 1 )), le club réunissait (( finale2 )) adhérents,
+            ce qui constitue une (* if taux2 > 0 *)augmentation(* else *)diminution(* endif *) de (( taux2|abs ))\% par rapport à l'année précédente.
+            Combien y avait-il d'adhérents en (( annee2 )) ?
+        (* endif *)
+      (* endfor *)
+    \end{enumerate}
+
+(* endif *)

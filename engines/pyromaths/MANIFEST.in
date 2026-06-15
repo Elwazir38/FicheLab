@@ -1,0 +1,10 @@
+include AUTHORS COPYING NEWS README.md
+exclude MANIFEST.in
+
+# Données
+graft pyromaths/data
+
+# Documentation
+graft Doc/source
+include Doc/Makefile
+

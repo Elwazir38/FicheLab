@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "titre": "5ème — Statistiques : lire et calculer",
+  "entete": {
+    "classe": "",
+    "date": ""
+  },
+  "mise_en_page": {
+    "colonnes": 2,
+    "corrige": true,
+    "vue": "eleve"
+  },
+  "exercices": [
+    {
+      "id": "5S10",
+      "n": 2,
+      "uuid": "50741",
+      "alea": "a741"
+    },
+    {
+      "id": "5S11",
+      "n": 3,
+      "uuid": "50742",
+      "alea": "a742"
+    },
+    {
+      "id": "5S13",
+      "n": 3,
+      "uuid": "50743",
+      "alea": "a743"
+    },
+    {
+      "id": "5S14",
+      "n": 3,
+      "uuid": "50744",
+      "alea": "a744"
+    }
+  ]
+}

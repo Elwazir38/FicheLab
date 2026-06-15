@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "titre": "4ème — Fractions : opérations",
+  "entete": {
+    "classe": "",
+    "date": ""
+  },
+  "mise_en_page": {
+    "colonnes": 2,
+    "corrige": true,
+    "vue": "eleve"
+  },
+  "exercices": [
+    {
+      "id": "4C21",
+      "n": 4,
+      "uuid": "40811",
+      "alea": "a811"
+    },
+    {
+      "id": "4C22",
+      "n": 4,
+      "uuid": "40812",
+      "alea": "a812"
+    },
+    {
+      "id": "4C23",
+      "n": 3,
+      "uuid": "40813",
+      "alea": "a813"
+    }
+  ]
+}

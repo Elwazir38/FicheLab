@@ -1,0 +1,23 @@
+{
+  "exercices": [
+    {
+      "id": "4C21",
+      "uuid": "ab12c",
+      "n": 4,
+      "alea": "VAQ7",
+      "sup": {},
+      "titre": "Additionner"
+    }
+  ],
+  "entete": {
+    "classe": "4B",
+    "date": "2026-06-15"
+  },
+  "mise_en_page": {
+    "corrige": true,
+    "colonnes": 2,
+    "vue": "eleve"
+  },
+  "titre": "Demo 4eme fractions",
+  "version": 1
+}

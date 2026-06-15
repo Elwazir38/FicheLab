@@ -1,0 +1,40 @@
+\exercice*
+
+\begin{enumerate}
+      \item Complétons le schéma suivant.
+        \begin{center}
+          \begin{tikzpicture}
+            \node[draw=black, circle, inner sep=0pt, minimum size=2em] (initial) at (0, 0) {?};
+            \node[draw=black, circle, inner sep=0pt, minimum size=2em] (final) at (3, 0) {$270$};
+            \draw[-Stealth, bend left] (initial) to node[above] {$\numprint{-10}\%$} node[below]{$\times?$} (final);
+            \draw[-Stealth, bend left] (final)   to node[below]{$?$} (initial);
+          \end{tikzpicture}
+        \end{center}
+        La valeur initiale est inconnue, mais après une diminution de 10\%, la valeur finale est 270. Or, diminuer une valeur de 10\% revient à la multiplier par $1-\frac{10}{100}=1\numprint{-0.1}=\numprint{0.9}$. En d'autres termes, pour passer de la valeur initiale à la valeur finale, on l'a multipliée par \numprint{0.9}. Pour revenir à la valeur initiale, il faut donc diviser la valeur finale par \numprint{0.9}, ce qui donne :
+        \[
+        \frac{270}{\numprint{0.9}}
+        =\frac{2700}{\numprint{9}}
+        =\frac{27 \times 100}{\numprint{9}}
+        =\frac{\cancel{\numprint{9}}\times \numprint{3} \times 100}{\cancel{\numprint{9}}}
+        =300
+        \]
+    
+        \begin{center}
+          \begin{tikzpicture}
+            \node[draw=black, circle, inner sep=0pt, minimum size=2em] (initial) at (0, 0) {$300$};
+            \node[draw=black, circle, inner sep=0pt, minimum size=2em] (final) at (3, 0) {$270$};
+            \draw[-Stealth, bend left] (initial) to node[above] {$\numprint{-10}\%$} node[below]{$\times\numprint{0.9}$} (final);
+            \draw[-Stealth, bend left] (final)   to node[below]{$\div\numprint{0.9}$} (initial);
+          \end{tikzpicture}
+        \end{center}
+          En 2005, le chiffre d'affaires de l'entreprise était donc de 300 milliers d'euros.
+      \item On calcule le taux d'évolution avec la formule :
+        \[
+          \frac{\text{Valeur finale} - \text{Valeur initiale}}{\text{Valeur initiale}}=\frac{600 - 500}{500}=\frac{100}{500}=\numprint{0.2}=20\%
+        \]
+          Le chiffre d'affaires a donc augmenté de 20\%.
+      \item
+Augmenter une valeur de 10\% revient à la multiplier par $1+\frac{10}{100}=1\numprint{+0.1}=\numprint{1.1}$.
+          Donc la nouvelle valeur est $900\times \numprint{1.1}=990$.
+          L'année suivante, le chiffre d'affaires était donc de 990 milliers d'euros.
+\end{enumerate}

@@ -1,0 +1,42 @@
+\exercice*
+\begin{enumerate}
+\item  On lit graphiquement le coefficient directeur de chacune des tangentes en ces points.\par
+$f'\,(-3)=\dfrac{1}{3} \qquad f'\,(1)=0 \qquad f'\,(3)=-4$.
+\item
+\begin{tikzpicture}[very thick]
+            \begin{axis}[axis lines=center,
+        enlargelimits=false,
+        axis line style={Maroon,-Stealth,line width=1.2pt},
+        grid=both,
+        minor tick num=1,
+        minor grid style={draw=lightgray, line width=.4pt},
+        major grid style={draw=Olive, line width=.6pt},
+        xmin=-6,
+        xmax=6,
+        xtick distance=1,
+        xlabel={$x$},
+        ymin=-5,
+        ymax=5,
+        ytick distance=1,
+        ylabel={$y$},
+        ticklabel style={font=\tiny,fill=white},
+        after end axis/.code={\path (axis cs:0,0) node [below left] {\tiny 0};},
+]
+\draw[ultra thick, Maroon] (axis cs:-6.1, 1) .. controls (axis cs:-5.066666666666666, 1.0) and (axis cs:-4.033333333333333, -1.0) ..
+(axis cs:-3, -1) .. controls (axis cs:-2.6666666666666665, -1.0) and (axis cs:-2.3333333333333335, 0.2222222222222222) ..
+(axis cs:-2, 0) .. controls (axis cs:-0.6666666666666667, -0.8888888888888888) and (axis cs:0.6666666666666667, 1.6666666666666667) ..
+(axis cs:2, 3) .. controls (axis cs:3.0, 4.0) and (axis cs:4.0, 2.0) ..
+(axis cs:5, 3) .. controls (axis cs:5.366666666666666, 3.3666666666666667) and (axis cs:5.733333333333333, 3.0) ..
+(axis cs:6.1, 3) 
+;\draw (axis cs:-3, -1) node{$\bullet$};
+\draw[thick, Stealth-Stealth] (axis cs:-4, -1.0) -- (axis cs:-2, -1.0);
+\draw (axis cs:-2, 0) node{$\bullet$};
+\draw[thick, Stealth-Stealth] (axis cs:-5, 2) -- (axis cs:1, -2);
+\draw (axis cs:2, 3) node{$\bullet$};
+\draw[thick, Stealth-Stealth] (axis cs:1, 2.0) -- (axis cs:3, 4.0);
+\draw (axis cs:5, 3) node{$\bullet$};
+\draw[thick, Stealth-Stealth] (axis cs:4, 2.0) -- (axis cs:6, 4.0);
+
+\end{axis}
+\end{tikzpicture}
+\end{enumerate}

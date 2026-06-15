@@ -1,0 +1,24 @@
+# Compiled python files
+*.pyc
+
+# Python egg info
+*.egg-info/
+
+# Build and distribution folders
+build/
+dist/
+
+# Eclipse files
+/.metadata/
+/.project
+/.pydevproject
+/.settings/
+/.project
+/.pydevproject
+/.settings/
+
+# Documentation sphinx
+/Doc/build/
+
+# script confidentiel
+/utils/transfert_sur_le_site.sh

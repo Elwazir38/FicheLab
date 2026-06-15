@@ -1,0 +1,46 @@
+\exercice
+
+\emph{Les questions sont indépendantes.}
+
+\begin{enumerate}
+  \item % calculer2
+
+
+
+
+
+    Voici la répartition des notes sur 5 d'une classe de 20 élèves de première.
+
+      \begin{center}\begin{tabular}{|l*{6}{|c}|}
+          \hline
+          Note  & 0  & 1  & 2  & 3  & 4  & 5  \\
+          \hline
+          Effectif  & 6  & 4  & 1  & 4  & 2  & 3  \\
+          \hline
+      \end{tabular}\end{center}
+
+      \begin{enumerate}
+        \item Quel est le pourcentage de la classe qui a eu 4 sur 5 ?
+        \item Quel est le pourcentage d'élèves de la classe qui a eu 4 sur 5 ou plus ?
+        \end{enumerate}
+
+
+  \item % appliquer1
+
+    Exprimer en litres : $7/8$ de \SI{80}{L}.
+
+
+
+
+
+
+  \item % inverse1
+
+
+
+    Si 20 \% d'une quantité Y vaut 6, que vaut Y ?
+
+
+
+
+\end{enumerate}

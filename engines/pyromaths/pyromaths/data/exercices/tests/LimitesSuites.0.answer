@@ -1,0 +1,86 @@
+\exercice
+Lorsqu'elles existent, calculer les limites des suites suivantes définies pour tout entier $n$ non nul.\par
+\begin{enumerate}
+  \item $u_n = \cfrac{2\,n^{2}+9\,n-2}{-7\,n^{3}-9\,n+9}$
+
+    Nous pouvons conjecturer que $\lim\limits_{n\to{}+\infty} 2\,n^{2}+9\,n-2 = +\infty$ et $\lim\limits_{n\to{}+\infty} -7\,n^{3}-9\,n+9 = -\infty$.
+
+    Par quotient, on obtient une forme indéterminée.
+    Nous allons donc factoriser le numérateur et le dénominateur par leur terme de plus haut degré :
+    $n^2$ pour le numérateur et $n^3$ pour le dénominateur.
+
+    $\begin{aligned}[t]
+      u_n &= \cfrac{n^2}{n^3} \times \cfrac{2 + \cfrac{9\,n}{n^2} + \cfrac{-2}{n^2}}
+             {-7 + \cfrac{-9\,n}{n^3} + \cfrac{9}{n^3}}
+          &= \cfrac{1}{n} \times \cfrac{2 + \cfrac{9}{n}+\cfrac{-2}{n^{2}}}
+             {-7 + \cfrac{-9}{n^{2}}+\cfrac{9}{n^{3}}}
+    \end{aligned}$
+
+    Nous savons que $\lim\limits_{n\to{}+\infty} \cfrac{1}{n} = 0$.
+
+    Par quotient, $\lim\limits_{n\to{}+\infty} \cfrac{ 2 + \cfrac{9}{n}+\cfrac{-2}{n^{2}}}{ -7 + \cfrac{-9}{n^{2}}+\cfrac{9}{n^{3}}} = \dfrac{-2}{7}$.
+
+    Par produit, on en déduit que $\lim\limits_{n\to{}+\infty} u_n = 0$.
+
+  \item $v_n = \cfrac{n^{3}+8\,n^{2}+7}{2\,n^{2}+4\,n-8}$
+
+    Nous pouvons conjecturer que $\lim\limits_{n\to{}+\infty} n^{3}+8\,n^{2}+7 = +\infty$ et $\lim\limits_{n\to{}+\infty} 2\,n^{2}+4\,n-8 = +\infty$.
+
+    Par quotient, on obtient une forme indéterminée.
+    Nous allons donc factoriser le numérateur et le dénominateur par leur terme de plus haut degré :
+    $n^3$ pour le numérateur et $n^2$ pour le dénominateur.
+
+    $\begin{aligned}[t]
+      v_n &= \cfrac{n^3}{n^2} \times \cfrac{1 + \cfrac{8\,n^{2}}{n^3} + \cfrac{7}{n^3}}
+             {2 + \cfrac{4\,n}{n^2} + \cfrac{-8}{n^2}}
+          &= n \times \cfrac{1 + \cfrac{8}{n}+\cfrac{7}{n^{3}}}
+             {2 + \cfrac{4}{n}+\cfrac{-8}{n^{2}}}
+    \end{aligned}$
+
+    Nous savons que $\lim\limits_{n\to{}+\infty} n = +\infty$.
+
+    Par quotient, $\lim\limits_{n\to{}+\infty} \cfrac{ 1 + \cfrac{8}{n}+\cfrac{7}{n^{3}}}{ 2 + \cfrac{4}{n}+\cfrac{-8}{n^{2}}} = \dfrac{1}{2}$.
+
+    Par produit, on en déduit que $\lim\limits_{n\to{}+\infty} v_n =  +\infty$. 
+  \item $w_n = -5\,n^{2}+5\,n+3$
+
+    Nous savons que $\lim\limits_{n\to{}+\infty} -5\,n^{2} = -\infty$ et $\lim\limits_{n\to{}+\infty} 5\,n = +\infty$.
+
+    Par somme, on obtient une forme indéterminée.
+    Nous allons donc factoriser par le terme de plus haut degré (ici $n^2$).
+
+      $\begin{aligned}[t]
+        w_n &= n^2\,\left( -5 + \cfrac{5\,n}{n^2} + \cfrac{3}{n^2}\right)\\
+            &= n^2\,\left( -5 + \cfrac{5}{n}+\cfrac{3}{n^{2}}\right)
+      \end{aligned}$
+
+    Nous savons que $\lim\limits_{n\to{}+\infty} n^2 = +\infty$ et $\lim\limits_{n\to{}+\infty} -5 + \cfrac{5}{n}+\cfrac{3}{n^{2}} = -5$.
+
+    Par produit, on en déduit que $\lim\limits_{n\to{}+\infty} w_n = -\infty$.
+
+  \item $s_n = 8\,n^{3}+5\,n+7$
+
+    Nous savons que $\lim\limits_{n\to{}+\infty} 8\,n^{3} = +\infty$ et $\lim\limits_{n\to{}+\infty} 5\,n = +\infty$.
+
+    Par somme, on en déduit que $\lim\limits_{n\to{}+\infty} s_n = +\infty$
+
+  \item $t_n = \cfrac{-3\,n^{3}-2\,n^{2}-1}{8\,n^{3}+5\,n^{2}+9}$
+
+    Nous pouvons conjecturer que $\lim\limits_{n\to{}+\infty} -3\,n^{3}-2\,n^{2}-1 = -\infty$ et $\lim\limits_{n\to{}+\infty} 8\,n^{3}+5\,n^{2}+9 = +\infty$.
+
+    Par quotient, on obtient une forme indéterminée.
+    Nous allons donc factoriser le numérateur et le dénominateur par leur terme de plus haut degré :
+    $n^3$ pour le numérateur et $n^3$ pour le dénominateur.
+
+    $\begin{aligned}[t]
+      t_n &= \cfrac{n^3}{n^3} \times \cfrac{-3 + \cfrac{-2\,n^{2}}{n^3} + \cfrac{-1}{n^3}}
+             {8 + \cfrac{5\,n^{2}}{n^3} + \cfrac{9}{n^3}}
+          &= 1 \times \cfrac{-3 + \cfrac{-2}{n}+\cfrac{-1}{n^{3}}}
+             {8 + \cfrac{5}{n}+\cfrac{9}{n^{3}}}
+          &= \cfrac{-3 + \cfrac{-2}{n}+\cfrac{-1}{n^{3}}}
+             {8 + \cfrac{5}{n}+\cfrac{9}{n^{3}}}
+    \end{aligned}$
+
+    Par quotient, on en déduit que $\lim\limits_{n\to{}+\infty} t_n = \dfrac{-3}{8}$.
+
+\end{enumerate}

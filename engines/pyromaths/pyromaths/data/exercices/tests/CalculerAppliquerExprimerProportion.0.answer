@@ -1,0 +1,74 @@
+\exercice*
+
+\begin{enumerate}
+
+  \item
+  % calculer2
+    % {'seuil': 4, 'audessusduseuil': Decimal('5'), 'note': 4, 'notes': {5: 3, 1: 4, 0: 6, 4: 2, 3: 4, 2: 1}}
+
+
+
+
+
+    \begin{enumerate}
+      \item Parmi 20 élèves, 2 élèves ont eu 4 sur 5, soit :
+        $\frac{2}{20}=\numprint{0.1}=\numprint{10} \%$.
+      \item Parmi 20 élèves, $
+          2
++          3
+        =
+        5
+        $ élèves ont eu plus de 4 sur 5, soit :
+        $\frac{5}{20}=\numprint{0.25}=\numprint{25} \%$.
+    \end{enumerate}
+
+
+  \item
+  % appliquer1
+    % {'a': 7, 'b': 8, 'c': 80, 'u': 'L', 'unite': 'litres'}
+
+    $7/8$ de \SI{80}{L} est égal à :
+      \begin{align*}
+        \frac{7}{8}\times \numprint{80}
+        &=\frac{7\times  \numprint{80}}{8}\\
+        &=\frac{7\times \numprint{10}\times\cancel{8}}{\cancel{8}}\\
+        &=7\times \numprint{10}\\
+        &=\numprint{70}
+      \end{align*}
+      La réponse est donc \SI{70}{L}.
+
+
+
+
+
+
+  \item
+  % inverse1
+    % {'lettre': 'Y', 'pourcent': 20, 'total': 30, 'partie': 6}
+
+
+
+    On peut résoudre cela avec un tableau de proportionnalité :
+    \begin{center}
+      \begin{tabular}{|l|c|c|}
+        \hline
+        Partie & 6 & 20 \\
+        \hline
+        Total  & Y & 100\\
+        \hline
+      \end{tabular}
+    \end{center}
+    La valeur manquante Y vaut donc :
+    \begin{align*}
+      Y
+      &= \frac{6 \times 100}{20} \\
+      &= \frac{3 \times \cancel{2} \times \cancel{10} \times 10}{\cancel{2} \times \cancel{10}}\\
+      &= 30
+    \end{align*}
+    La quantité Y vaut donc $30$.
+
+
+
+
+
+\end{enumerate}

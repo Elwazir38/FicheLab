@@ -1,0 +1,48 @@
+\exercice
+
+\emph{Les questions sont indépendantes.}
+
+\begin{enumerate}
+  (* for question in questions *)
+  (* set q=questions[question] *)
+  \item % (( question ))
+
+    (* if question == "appliquer1" *)
+    Exprimer en (( q.unite )) : $(( q.a ))/(( q.b ))$ de \SI{(( q.c ))}{(( q.u ))}.
+    (* endif *)
+
+    (* if question == "appliquer2" *)
+    Une entreprise de (( q.employes )) employés compte (( q.pourcent )) \% de cadres, et le reste d'ouvriers. Calculer l'effectif des cadres.
+    (* endif *)
+
+    (* if question == "inverse1" *)
+    Si (( q.pourcent )) \% d'une quantité (( q.lettre )) vaut (( q.partie )), que vaut (( q.lettre )) ?
+    (* endif *)
+
+    (* if question == "calculer1" *)
+    Parmi les (( q.employes )) employés d'une entreprise, (( q.femmes )) sont des femmes. Calculer la proportion de femmes dans l'entreprise.
+    (* endif *)
+
+    (* if question == "calculer2" *)
+    Voici la répartition des notes sur 5 d'une classe de (( q.notes.values()|sum )) élèves de première.
+
+      \begin{center}\begin{tabular}{|l*{6}{|c}|}
+          \hline
+          Note (* for n in range(6) *) & (( n )) (* endfor *) \\
+          \hline
+          Effectif (* for n in range(6) *) & (( q.notes[n] )) (* endfor *) \\
+          \hline
+      \end{tabular}\end{center}
+
+      \begin{enumerate}
+        \item Quel est le pourcentage de la classe qui a eu (( q.note )) sur 5 ?
+        \item Quel est le pourcentage d'élèves de la classe qui a eu (( q.seuil )) sur 5 ou plus ?
+        \end{enumerate}
+    (* endif *)
+
+    (* if question == "calculer3" *)
+    Calculer les $\frac{(( q.a ))}{(( q.b ))}$ des $\frac{(( q.b ))}{(( q.c ))}$ de (( q.prix )) €.
+    (* endif *)
+
+(* endfor *)
+\end{enumerate}

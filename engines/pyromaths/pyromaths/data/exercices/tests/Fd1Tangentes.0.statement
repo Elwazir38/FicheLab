@@ -1,0 +1,55 @@
+\exercice
+\begin{minipage}[]{\linewidth-8cm}
+\begin{enumerate}
+\item Déterminer graphiquement les nombres dérivés de la fonction $f$ en $\qquad x=-3 \qquad x=1 \qquad x=3$.
+\item On considère le tableau de valeurs suivant :\par
+\renewcommand{\arraystretch}{2}
+\begin{tabularx}{\linewidth}[t]{|*5{>{\centering\arraybackslash}X|}}
+\hline
+$x$ & $-3$ & $-2$ & $2$ & $5$ \\ \hline
+$g\,(x)$ & $-1$ & $0$ & $3$ & $3$ \\ \hline
+$g'\,(x)$ & $0$ & $\dfrac{-2}{3}$ & $1$ & $1$ \\ \hline
+\end{tabularx}
+\begin{enumerate}
+\item Dans un nouveau repère, placer les points de la courbe $\mathcal{C}_g$ ainsi connus.
+\item Tracer les tangentes à $\mathcal{C}_g$ en ces points.
+\item Donner une allure possible de la courbe $\mathcal{C}_g$.
+\end{enumerate}
+\end{enumerate}
+\end{minipage}
+\hfill
+\begin{minipage}[]{7.5cm}
+\begin{tikzpicture}[very thick]
+            \begin{axis}[axis lines=center,
+        enlargelimits=false,
+        axis line style={Maroon,-Stealth,line width=1.2pt},
+        grid=both,
+        minor tick num=1,
+        minor grid style={draw=lightgray, line width=.4pt},
+        major grid style={draw=Olive, line width=.6pt},
+        xmin=-6,
+        xmax=6,
+        xtick distance=1,
+        xlabel={$x$},
+        ymin=-5,
+        ymax=5,
+        ytick distance=1,
+        ylabel={$y$},
+        ticklabel style={font=\tiny,fill=white},
+        after end axis/.code={\path (axis cs:0,0) node [below left] {\tiny 0};},
+]
+\draw[ultra thick, Maroon] (axis cs:-6.1, -1) .. controls (axis cs:-5.066666666666666, -1.0) and (axis cs:-4.033333333333333, 3.6555555555555554) ..
+(axis cs:-3, 4) .. controls (axis cs:-1.6666666666666667, 4.444444444444445) and (axis cs:-0.33333333333333326, -2.0) ..
+(axis cs:1, -2) .. controls (axis cs:1.6666666666666665, -2.0) and (axis cs:2.3333333333333335, 2.6666666666666665) ..
+(axis cs:3, 0) .. controls (axis cs:4.033333333333333, -4.133333333333333) and (axis cs:5.066666666666666, -2.0) ..
+(axis cs:6.1, -2) 
+;\draw (axis cs:-3, 4) node{$\bullet$};
+\draw[thick, Stealth-Stealth] (axis cs:-6, 3) -- (axis cs:0, 5);
+\draw (axis cs:1, -2) node{$\bullet$};
+\draw[thick, Stealth-Stealth] (axis cs:0, -2.0) -- (axis cs:2, -2.0);
+\draw (axis cs:3, 0) node{$\bullet$};
+\draw[thick, Stealth-Stealth] (axis cs:2, 4.0) -- (axis cs:4, -4.0);
+
+\end{axis}
+\end{tikzpicture}
+\end{minipage}

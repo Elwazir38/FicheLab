@@ -1,0 +1,85 @@
+\exercice
+Voici deux exemples de zigzags :\par
+\begin{center}
+\begin{tikzpicture}[ultra thick, scale=0.4]
+\coordinate (A) at (0.2, 0.2);
+\coordinate (B) at (0.83, 6.17);
+\coordinate (C) at (2.48, 0.4);
+\coordinate (D) at (3.63, 6.29);
+\coordinate (E) at (9.23, 4.14);
+\coordinate (F) at (14.83, 6.29);
+\coordinate (G) at (15.87, 0.38);
+\draw (A) node[below]{$A$};
+\draw (B) node[above]{$B$};
+\draw[Maroon] (A) -- (B);
+\draw[Maroon,draw,decoration={markings, mark=at position .5  with {\node[transform shape] {$\parallel$};}}] (A) edge[decorate] (B);\draw (C) node[below]{$C$};
+\draw (D) node[above]{$D$};
+\draw (E) node[below]{$E$};
+\draw (F) node[above]{$F$};
+\draw (G) node[below]{$G$};
+\draw[Maroon] (B) -- (C) -- (D) -- (E) -- (F) -- (G);
+\draw[Maroon,draw,decoration={markings, mark=at position .5  with {\node[transform shape] {$\parallel$};}}]
+    (B) edge[decorate] (C)
+    (C) edge[decorate] (D)
+    (D) edge[decorate] (E)
+    (E) edge[decorate] (F)
+    (F) edge[decorate] (G);\draw pic [draw,Maroon,angle radius=20pt] {angle = A--B--C};
+\draw pic [draw,Maroon,angle radius=20pt] {angle = D--C--B};
+\draw pic [draw,Maroon,angle radius=20pt] {angle = C--D--E};
+\draw pic [draw,Maroon,angle radius=20pt] {angle = F--E--D};
+\draw pic [draw,Maroon,angle radius=20pt] {angle = E--F--G};\end{tikzpicture}
+\hspace{2cm}
+\begin{tikzpicture}[ultra thick, scale=0.4]
+\coordinate (A) at (0.2, 0.2);
+\coordinate (B) at (0.3, 6.2);
+\coordinate (C) at (1.76, 0.38);
+\coordinate (D) at (5.28, 5.23);
+\coordinate (E) at (10.37, 2.05);
+\coordinate (F) at (14.46, 6.44);
+\coordinate (G) at (15.61, 0.55);
+\draw (A) node[below]{$A$};
+\draw (B) node[above]{$B$};
+\draw[Maroon] (A) -- (B);
+\draw[Maroon,draw,decoration={markings, mark=at position .5  with {\node[transform shape] {$\parallel$};}}] (A) edge[decorate] (B);\draw (C) node[below]{$C$};
+\draw (D) node[above]{$D$};
+\draw (E) node[below]{$E$};
+\draw (F) node[above]{$F$};
+\draw (G) node[below]{$G$};
+\draw[Maroon] (B) -- (C) -- (D) -- (E) -- (F) -- (G);
+\draw[Maroon,draw,decoration={markings, mark=at position .5  with {\node[transform shape] {$\parallel$};}}]
+    (B) edge[decorate] (C)
+    (C) edge[decorate] (D)
+    (D) edge[decorate] (E)
+    (E) edge[decorate] (F)
+    (F) edge[decorate] (G);\draw pic [draw,Maroon,angle radius=20pt] {angle = A--B--C};
+\draw pic [draw,Maroon,angle radius=20pt] {angle = D--C--B};
+\draw pic [draw,Maroon,angle radius=20pt] {angle = C--D--E};
+\draw pic [draw,Maroon,angle radius=20pt] {angle = F--E--D};
+\draw pic [draw,Maroon,angle radius=20pt] {angle = E--F--G};\end{tikzpicture}
+\end{center}
+Construire sur la figure ci-dessous les points $C$, $D$, $E$, $F$ et $G$ pour obtenir un zigzag tel que :\par
+$\widehat{ABC}=\ang{24} \qquad \widehat{BCD}=\ang{50} \qquad \widehat{CDE}=\ang{117} \qquad \widehat{DEF}=\ang{163} \qquad \widehat{EFG}=\ang{122} \qquad $\par
+Quand le travail est fait avec une bonne précision, les 
+droites $(AF)$ et $(BG)$ se coupent au c\oe ur de la cible.
+\begin{center}\fbox{
+\begin{tikzpicture}[ultra thick, scale=1.1]
+\coordinate (A) at (0.2, 0.2);
+\coordinate (B) at (0.47902589497650183, 4.190256201039297);
+\coordinate (C) at (1.8471064682791771, 0.4314857178956637);
+\coordinate (D) at (3.8471064682791773, 3.895587333033418);
+\coordinate (E) at (7.841624607297472, 3.6862435080616427);
+\coordinate (F) at (11.722807512401458, 4.653931090460314);
+\coordinate (G) at (14.600166713756062, 1.875297608624325);
+\draw (A) node[below]{$A$};
+\draw (B) node[above]{$B$};
+\draw[Maroon] (A) -- (B);
+\draw[Maroon,draw,decoration={markings, mark=at position .5  with {\node[transform shape] {$\parallel$};}}] (A) edge[decorate] (B);\draw[Gray] (7.531947919462909, 3.0340307478872273) circle (0.1);
+\draw[Gray] (7.531947919462909, 3.0340307478872273) circle (0.2);
+\draw[Gray] (7.531947919462909, 3.0340307478872273) circle (0.3);
+\draw[Gray] (7.531947919462909, 3.0340307478872273) circle (0.4);
+\draw (C) node[opacity=0, below]{$C$};
+\draw (D) node[opacity=0, above]{$D$};
+\draw (E) node[opacity=0, below]{$E$};
+\draw (F) node[opacity=0, above]{$F$};
+\draw (G) node[opacity=0, below]{$G$};\end{tikzpicture}
+}\end{center}

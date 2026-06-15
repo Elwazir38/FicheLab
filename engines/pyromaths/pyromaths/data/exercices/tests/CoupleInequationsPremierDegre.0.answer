@@ -1,0 +1,71 @@
+\exercice*
+
+Commençons par résoudre séparément les deux inéquations.
+
+\begin{minipage}[b]{.4\textwidth}
+\begin{align*}
+\numprint{-7}\,x+\numprint{3} & ≤ \numprint{-9}\,x+\numprint{6} \\
+    \numprint{-7}\,x+\numprint{3} \textcolor{blue}{\numprint{+9}\,x} & ≤ \numprint{-9}\,x+\numprint{6} \textcolor{blue}{\numprint{+9}\,x}\\
+\numprint{2}\,x+\numprint{3} & ≤ \numprint{6} \\
+    \numprint{2}\,x+\numprint{3} \textcolor{blue}{-\numprint{3}} & ≤ \numprint{6} \textcolor{blue}{-\numprint{3}}\\
+\numprint{2}\,x & ≤ \numprint{3} \\
+    \numprint{2}\,x \textcolor{blue}{\div \numprint{2}} & ≤ \numprint{3} \textcolor{blue}{\div \numprint{2}}\\
+  x & ≤ \frac{\numprint{3}}{\numprint{2}} \\
+\end{align*}
+\end{minipage}%
+\hfill%
+\begin{minipage}[b]{.4\textwidth}
+\begin{align*}
+\numprint{-2}\,x+\numprint{1} & > \numprint{-7}\,x-\numprint{3} \\
+    \numprint{-2}\,x+\numprint{1} \textcolor{blue}{\numprint{+7}\,x} & > \numprint{-7}\,x-\numprint{3} \textcolor{blue}{\numprint{+7}\,x}\\
+\numprint{5}\,x+\numprint{1} & > -\numprint{3} \\
+    \numprint{5}\,x+\numprint{1} \textcolor{blue}{-\numprint{1}} & > -\numprint{3} \textcolor{blue}{-\numprint{1}}\\
+\numprint{5}\,x & > -\numprint{4} \\
+    \numprint{5}\,x \textcolor{blue}{\div \numprint{5}} & > -\numprint{4} \textcolor{blue}{\div \numprint{5}}\\
+  x & > -\frac{\numprint{4}}{\numprint{5}} \\
+\end{align*}
+\end{minipage}%
+
+Les solutions sont donc \textcolor{blue}{$x≤\frac{\numprint{3}}{\numprint{2}}$} et \textcolor{Green}{$x>-\frac{\numprint{4}}{\numprint{5}}$}, dont voici la représentation sur la droite des réels.
+
+\begin{center}
+    \begin{tikzpicture}[line width=2pt, xscale=1]
+      \draw[-Stealth] ( -6, 0) -- ( 6, 0);
+      \foreach \x in { -5, 0, ..., 5}{
+          \draw (\x, -.2) -- (\x, .2);
+          \path (\x, 0) node[above=5pt]{$\x$};
+      }
+      \foreach \x in { -5, ..., 5}{
+          \draw[line width=1.5pt] (\x, -.15) -- (\x, .15);
+      }
+      \begin{scope}[blue]
+          \path ( 3/2, 0) node[below=9pt]{$\frac{\numprint{3}}{\numprint{2}}$};
+          \draw[arrows={Bracket[scale=1.5, inset=3pt,]-},yshift=-2pt]
+               ($
+                  ( 3/2, 0)
+                  +
+                      (.5pt, 0)
+               $)
+               --
+ ( -6, 0)                ;
+      \end{scope}
+      \begin{scope}[Green]
+          \path ( -4/5, 0) node[below=9pt]{$-\frac{\numprint{4}}{\numprint{5}}$};
+          \draw[arrows={Bracket[scale=1.5,reversed]-},yshift=-4pt]
+               ($
+                  ( -4/5, 0)
+                  +
+                      (-4.5pt, 0)
+               $)
+               --
+ ( 5.6, 0)                ;
+      \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+Puisque nous voulons
+ l'intersection des deux solutions (car $x≤\frac{\numprint{3}}{\numprint{2}}$ \textbf{et} $x>-\frac{\numprint{4}}{\numprint{5}}$), alors nous cherchons les parties de la droite des réels surlignées
+ deux fois. Les solutions sont donc :
+\[
+    x \in \left]-\frac{\numprint{4}}{\numprint{5}} ; \frac{\numprint{3}}{\numprint{2}}\right]
+\]

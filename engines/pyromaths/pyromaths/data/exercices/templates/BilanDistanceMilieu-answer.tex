@@ -1,0 +1,94 @@
+\exercice*
+
+On rappelle que les coordonnées des points sont : $((nA))((A))$, $((nB))((B))$ et $((nC))((C))$.
+\begin{enumerate}
+  \item
+\begin{enumerate}
+    \item Puisque $I$ est le milieu de $[((nA))((nC))]$, alors :
+    \begin{align*}
+        x_I &= \frac{x_((nA))+x_((nC))}{2} & y_I &= \frac{y_((nA))+y_((nC))}{2}\\
+      x_I &= \frac{((A.x)) + ((C.x|facteur("p")))}{2} & y_I &= \frac{((A.y))+((C.y|facteur("p")))}{2}\\
+      x_I &= ((I.x|facteur)) & y_I &= ((I.y|facteur))\\
+    \end{align*}
+    Les coordonnées de $I$ sont donc $I( ((I.x|facteur)); ((I.y|facteur)) )$.
+\item Puisque $((nD))$ est le symétrique de $((nB))$ par rapport à $I$, alors $I$ est le milieu de $[((nB))((nD))]$, donc :
+    \begin{align*}
+        x_I &= \frac{x_((nB))+x_((nD))}{2} & y_I &= \frac{y_((nB))+y_((nD))}{2}\\
+        ((I.x|facteur)) &= \frac{((B.x))+x_((nD))}{2} & ((I.y|facteur)) &= \frac{((B.y))+y_((nD))}{2}\\
+        (((2*I.x)|facteur)) &= ((B.x))+x_((nD)) & (((2*I.y)|facteur)) &= ((B.y))+y_((nD))\\
+        ((D.x)) &= x_((nD)) & ((D.y))&=y_((nD))
+    \end{align*}
+    Les coordonnées de $((nD))$ sont donc $((nD))((D))$.
+\item D'après l'énoncé, $I$ est le milieu de $[((nA))((nC))]$. D'après la question précédente, $I$ est aussi le mileu de $[((nB))((nD))]$. Donc les deux diagonales de $((nABCD))$ ont le même milieu : $((nABCD))$ est un parallélogramme.
+\end{enumerate}
+\item
+\begin{enumerate}
+    \item Calculons la longueur $((nB))((nD))$.
+    \begin{align*}
+        ((nB))((nC)) &= \sqrt{\left( x_((nC))-x_((nB)) \right)^2+\left( y_((nC))-y_((nB)) \right)^2}\\
+      &= \sqrt{\left( ((C.x))-((B.x|facteur("p"))) \right)^2+\left( ((C.y))-((B.y|facteur("p"))) \right)^2}\\
+      &= \sqrt{(((C.x-B.x)|facteur("p")))^2+(((C.y-B.y)|facteur("p")))^2}\\
+      &= \sqrt{(( (C.x-B.x)**2 )) + (( (C.y-B.y)**2 ))}\\
+      &= \sqrt{(( (C.x-B.x)**2    +    (C.y-B.y)**2 ))}\\
+      &=\sqrt{((BC[0]))^2\times((BC[1]))}\\
+      &=((BC[0]))\sqrt{((BC[1]))}
+    \end{align*}
+\item On a : $((nA))((nB))=((AB[0]))\sqrt{((AB[1]))}$, $((nA))((nC))=((AC[0]))\sqrt{((AC[1]))}$, et $((nB))((nC))=((BC[0]))\sqrt{((BC[1]))}$.
+    \begin{itemize}
+        \item Puisque les trois longueurs ne sont pas égales, le triangle $((nABC))$ n'est pas équilatéral.
+        \item (* if isocele *)
+              Puisque $((nA))((nB))= ((nB))((nC))$, le triangle $((nABC))$ est isocèle en $((nB))$.
+              (* else *)
+              Puisque $((nA))((nB))\neq ((nB))((nC))$, le triangle $((nABC))$ n'est pas isocèle en $((nB))$.
+              (* endif *)
+      \item Vérifions l'égalité de Pythagore pour déterminer si le triangle est rectangle en $((nB))$ ou non.
+
+          D'une part : $
+                ((nA))((nC))^2
+                =\left( ((AC[0]))\sqrt{((AC[1]))} \right)^2
+                =((AC[0]))^2\times\left(\sqrt{((AC[1]))}\right)^2
+                =((AC[0]**2))\times((AC[1]))
+                =((AC[0]**2*AC[1]))
+                $.
+
+        D'autre part :
+        \begin{align*}
+            ((nA))((nB))^2+((nB))((nC))^2
+            &= \left( ((AB[0]))\sqrt{((AB[1]))} \right)^2+\left( ((BC[0]))\sqrt{((BC[1]))}\right)^2 \\
+            &= ((AB[0]))^2\times\left(\sqrt{((AB[1]))} \right)^2+((BC[0]))^2\times\left(\sqrt{((BC[1]))}\right)^2 \\
+            &= ((AB[0]**2))\times((AB[1]))+((BC[0]**2))\times((BC[1]))\\
+            &= ((AB[0]**2*AB[1]))+((BC[0]**2*BC[1]))\\
+            &= ((AB[0]**2*AB[1]+BC[0]**2*BC[1]))\\
+        \end{align*}
+
+        (* if rectangle *)
+        Donc $((nA))((nC))^2=((nA))((nB))^2+((nB))((nC))^2$ et, d'après la réciproque du théorème de Pythagore, le triangle $((nABC))$ est rectangle en $((nB))$.
+        (* else *)
+        Donc $((nA))((nC))^2 \neq ((nA))((nB))^2+((nB))((nC))^2$ et, d'après la contraposée du théorème de Pythagore, le triangle $((nABC))$ n'est pas rectangle en $((nB))$.
+        (* endif *)
+    \end{itemize}
+\end{enumerate}
+\item On sait déjà que $((nABCD))$ est un parallélogramme.
+
+  \begin{itemize}
+      \item (* if isocele *)
+          Puisque $((nA))((nB))=((nB))((nC))$, alors $((nABCD))$ est un losange.
+          (* else *)
+          Puisque $((nA))((nB))\neq ((nB))((nC))$, alors $((nABCD))$ n'est pas un losange.
+          (* endif *)
+      \item (* if rectangle *)
+          Puisque l'angle $\widehat{((nABC))}$ est droit (car le triangle $((nABC))$ est rectangle en $((nB))$), alors $((nABCD))$ est un rectangle.
+          (* else *)
+          Puisque l'angle $\widehat{((nABC))}$ n'est pas droit (car le triangle $((nABC))$ n'est pas rectangle en $((nB))$), alors $((nABCD))$ n'est pas un rectangle.
+          (* endif *)
+      \item (* if isocele and rectangle *)
+          Puisque $((nABCD))$ est à la fois un losange et un rectangle, c'est un carré.
+          (* elif isocele *)
+          Puisque $((nABCD))$ n'est pas un rectangle, ce n'est pas non plus un carré.
+          (* elif rectangle *)
+          Puisque $((nABCD))$ n'est pas un losange, ce n'est pas non plus un carré.
+          (* else *)
+          Puisque $((nABCD))$ n'est ni un rectangle ni un losange, c'est un parallélogramme quelconque.
+          (* endif *)
+  \end{itemize}
+\end{enumerate}

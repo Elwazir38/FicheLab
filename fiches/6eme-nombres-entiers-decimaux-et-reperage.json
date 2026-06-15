@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "titre": "6ème — Nombres entiers, décimaux et repérage",
+  "entete": {
+    "classe": "",
+    "date": ""
+  },
+  "mise_en_page": {
+    "colonnes": 2,
+    "corrige": true,
+    "vue": "eleve"
+  },
+  "exercices": [
+    {
+      "id": "6N10",
+      "n": 4,
+      "uuid": "6N101",
+      "alea": "a601"
+    },
+    {
+      "id": "6N11",
+      "n": 3,
+      "uuid": "6N111",
+      "alea": "a602"
+    },
+    {
+      "id": "6N12",
+      "n": 4,
+      "uuid": "6N121",
+      "alea": "a603"
+    },
+    {
+      "id": "6N31",
+      "n": 3,
+      "uuid": "6N311",
+      "alea": "a604"
+    }
+  ]
+}

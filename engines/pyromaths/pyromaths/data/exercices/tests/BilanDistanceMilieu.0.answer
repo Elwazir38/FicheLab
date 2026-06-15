@@ -1,0 +1,70 @@
+\exercice*
+
+On rappelle que les coordonnées des points sont : $P(1,-3)$, $Q(3,-9)$ et $R(9,-7)$.
+\begin{enumerate}
+  \item
+\begin{enumerate}
+    \item Puisque $I$ est le milieu de $[PR]$, alors :
+    \begin{align*}
+        x_I &= \frac{x_P+x_R}{2} & y_I &= \frac{y_P+y_R}{2}\\
+      x_I &= \frac{1 + \numprint{9}}{2} & y_I &= \frac{-3+\left(\numprint{-7}\right)}{2}\\
+      x_I &= \numprint{5} & y_I &= \numprint{-5}\\
+    \end{align*}
+    Les coordonnées de $I$ sont donc $I( \numprint{5}; \numprint{-5} )$.
+\item Puisque $S$ est le symétrique de $Q$ par rapport à $I$, alors $I$ est le milieu de $[QS]$, donc :
+    \begin{align*}
+        x_I &= \frac{x_Q+x_S}{2} & y_I &= \frac{y_Q+y_S}{2}\\
+        \numprint{5} &= \frac{3+x_S}{2} & \numprint{-5} &= \frac{-9+y_S}{2}\\
+        \numprint{10} &= 3+x_S & \numprint{-10} &= -9+y_S\\
+        7 &= x_S & -1&=y_S
+    \end{align*}
+    Les coordonnées de $S$ sont donc $S(7,-1)$.
+\item D'après l'énoncé, $I$ est le milieu de $[PR]$. D'après la question précédente, $I$ est aussi le mileu de $[QS]$. Donc les deux diagonales de $PQRS$ ont le même milieu : $PQRS$ est un parallélogramme.
+\end{enumerate}
+\item
+\begin{enumerate}
+    \item Calculons la longueur $QS$.
+    \begin{align*}
+        QR &= \sqrt{\left( x_R-x_Q \right)^2+\left( y_R-y_Q \right)^2}\\
+      &= \sqrt{\left( 9-\numprint{3} \right)^2+\left( -7-\left(\numprint{-9}\right) \right)^2}\\
+      &= \sqrt{\numprint{6}^2+\numprint{2}^2}\\
+      &= \sqrt{36 + 4}\\
+      &= \sqrt{40}\\
+      &=\sqrt{2^2\times10}\\
+      &=2\sqrt{10}
+    \end{align*}
+\item On a : $PQ=2\sqrt{10}$, $PR=4\sqrt{5}$, et $QR=2\sqrt{10}$.
+    \begin{itemize}
+        \item Puisque les trois longueurs ne sont pas égales, le triangle $PQR$ n'est pas équilatéral.
+        \item               Puisque $PQ= QR$, le triangle $PQR$ est isocèle en $Q$.
+      \item Vérifions l'égalité de Pythagore pour déterminer si le triangle est rectangle en $Q$ ou non.
+
+          D'une part : $
+                PR^2
+                =\left( 4\sqrt{5} \right)^2
+                =4^2\times\left(\sqrt{5}\right)^2
+                =16\times5
+                =80
+                $.
+
+        D'autre part :
+        \begin{align*}
+            PQ^2+QR^2
+            &= \left( 2\sqrt{10} \right)^2+\left( 2\sqrt{10}\right)^2 \\
+            &= 2^2\times\left(\sqrt{10} \right)^2+2^2\times\left(\sqrt{10}\right)^2 \\
+            &= 4\times10+4\times10\\
+            &= 40+40\\
+            &= 80\\
+        \end{align*}
+
+        Donc $PR^2=PQ^2+QR^2$ et, d'après la réciproque du théorème de Pythagore, le triangle $PQR$ est rectangle en $Q$.
+    \end{itemize}
+\end{enumerate}
+\item On sait déjà que $PQRS$ est un parallélogramme.
+
+  \begin{itemize}
+      \item           Puisque $PQ=QR$, alors $PQRS$ est un losange.
+      \item           Puisque l'angle $\widehat{PQR}$ est droit (car le triangle $PQR$ est rectangle en $Q$), alors $PQRS$ est un rectangle.
+      \item           Puisque $PQRS$ est à la fois un losange et un rectangle, c'est un carré.
+  \end{itemize}
+\end{enumerate}

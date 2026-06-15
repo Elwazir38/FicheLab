@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "titre": "4ème — Puissances et notation scientifique",
+  "entete": {
+    "classe": "",
+    "date": ""
+  },
+  "mise_en_page": {
+    "colonnes": 2,
+    "corrige": true,
+    "vue": "eleve"
+  },
+  "exercices": [
+    {
+      "id": "4C30",
+      "n": 3,
+      "uuid": "40821",
+      "alea": "a821"
+    },
+    {
+      "id": "4C32",
+      "n": 3,
+      "uuid": "40822",
+      "alea": "a822"
+    },
+    {
+      "id": "4C33-3",
+      "n": 4,
+      "uuid": "40823",
+      "alea": "a823"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "titre": "4ème — Calcul littéral : distributivité et factorisation",
+  "entete": {
+    "classe": "",
+    "date": ""
+  },
+  "mise_en_page": {
+    "colonnes": 2,
+    "corrige": true,
+    "vue": "eleve"
+  },
+  "exercices": [
+    {
+      "id": "4L10",
+      "n": 4,
+      "uuid": "40841",
+      "alea": "a841"
+    },
+    {
+      "id": "4L11",
+      "n": 4,
+      "uuid": "40842",
+      "alea": "a842"
+    },
+    {
+      "id": "4L14-1",
+      "n": 3,
+      "uuid": "40843",
+      "alea": "a843"
+    }
+  ]
+}

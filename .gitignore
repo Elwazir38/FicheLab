@@ -1,0 +1,24 @@
+# --- Python ---
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+
+# --- FicheLab : sorties & temporaires ---
+# Les PDF sont régénérables depuis les fiches .json (reproductibles).
+*.pdf
+fichelab-*.pdf
+
+# --- Moteur vendorisé : on garde le CODE de Pyromaths, pas son dépôt Git ---
+engines/pyromaths/.git/
+
+# --- OS / éditeurs ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# --- OneDrive ---
+*~$*

@@ -1,0 +1,9 @@
+\exercice
+
+Résoudre le couple d'inéquations suivantes, et représenter les solutions sur la droite des réels, puis sous la forme d'un intervalle, ou d'une union d'intervalles disjoints.
+
+\[
+  \numprint{-7}\,x+\numprint{3}≤\numprint{-9}\,x+\numprint{6}
+  \text{ et }
+  \numprint{-2}\,x+\numprint{1}>\numprint{-7}\,x-\numprint{3}
+\]

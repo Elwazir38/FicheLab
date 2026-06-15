@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "titre": "4ème — Calcul littéral — Pyromaths",
+  "niveau": "Quatrième",
+  "entete": { "classe": "4ème B", "date": "16/06/2026" },
+  "mise_en_page": { "corrige": true },
+  "exercices": [
+    { "source": "pyromaths", "name": "distributivite", "seed": 11, "nb": 1 },
+    { "source": "pyromaths", "name": "double_distributivite", "seed": 5, "nb": 1 }
+  ]
+}

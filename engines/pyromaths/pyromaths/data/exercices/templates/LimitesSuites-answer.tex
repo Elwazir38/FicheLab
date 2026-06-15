@@ -1,0 +1,95 @@
+\exercice
+Lorsqu'elles existent, calculer les limites des suites suivantes définies pour tout entier $n$ non nul.\par
+\begin{enumerate}
+    (* for q in questions *)
+    (* if q["cas"] == 1 *)
+  \item $(( q["suite"] )) = (( q["polynome_ord"] ))$
+
+    Nous savons que $\lim\limits_{n\to{}+\infty} (( [q["polynome_ord"][0]]|Polynome("n") )) = (( q["l1"] ))$ et $\lim\limits_{n\to{}+\infty} (( [q["polynome_ord"][1]]|Polynome("n") )) = (( q["l1"] ))$.
+
+    Par somme, on en déduit que $\lim\limits_{n\to{}+\infty} (( q["suite"] )) = (( q["l1"] ))$
+
+    (* elif q["cas"] == 2 *)
+  \item $(( q["suite"] )) = (( q["polynome_ord"] ))$
+
+    Nous savons que $\lim\limits_{n\to{}+\infty} (( [q["polynome_ord"][0]]|Polynome("n") )) = (( q["l1"] ))$ et $\lim\limits_{n\to{}+\infty} (( [q["polynome_ord"][1]]|Polynome("n") )) = (( q["l2"] ))$.
+
+    Par somme, on obtient une forme indéterminée.
+    Nous allons donc factoriser par le terme de plus haut degré (ici $n^(( q["degre"] ))$).
+
+      $\begin{aligned}[t]
+        (( q["suite"] )) &= n^(( q["degre"] ))\,\left( (( q["polynome_ord"][0][0] )) + \cfrac{(( [q["polynome_ord"][1]]|Polynome("n") ))}{n^(( q["degre"] ))} + \cfrac{(( [q["polynome_ord"][2]]|Polynome("n") ))}{n^(( q["degre"] ))}\right)\\
+            &= n^(( q["degre"] ))\,\left( (( q["polynome_ord"][0][0] )) + \cfrac{(( [[q["polynome_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre"] - q["polynome_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre"] - q["polynome_ord"][2][1]]]|Polynome("n") ))}\right)
+      \end{aligned}$
+
+    Nous savons que $\lim\limits_{n\to{}+\infty} n^(( q["degre"] )) = +\infty$ et $\lim\limits_{n\to{}+\infty} (( q["polynome_ord"][0][0] )) + \cfrac{(( [[q["polynome_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre"] - q["polynome_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre"] - q["polynome_ord"][2][1]]]|Polynome("n") ))} = (( q["polynome_ord"][0][0] ))$.
+
+    Par produit, on en déduit que $\lim\limits_{n\to{}+\infty} (( q["suite"] )) = (( q["l1"] ))$.
+
+    (* elif q["cas"] == 3 *)
+  \item $(( q["suite"] )) = \cfrac{(( q["polynome1_ord"] ))}{(( q["polynome2_ord"] ))}$
+
+    Nous pouvons conjecturer que $\lim\limits_{n\to{}+\infty} (( q["polynome1_ord"] )) = (( q["l1"] ))$ et $\lim\limits_{n\to{}+\infty} (( q["polynome2_ord"] )) = (( q["l2"] ))$.
+
+    Par quotient, on obtient une forme indéterminée.
+    Nous allons donc factoriser le numérateur et le dénominateur par leur terme de plus haut degré :
+    $n^(( q["degre1"] ))$ pour le numérateur et $n^(( q["degre2"] ))$ pour le dénominateur.
+
+    $\begin{aligned}[t]
+      (( q["suite"] )) &= \cfrac{n^(( q["degre1"] ))}{n^(( q["degre2"] ))} \times \cfrac{(( q["polynome1_ord"][0][0] )) + \cfrac{(( [q["polynome1_ord"][1]]|Polynome("n") ))}{n^(( q["degre1"] ))} + \cfrac{(( [q["polynome1_ord"][2]]|Polynome("n") ))}{n^(( q["degre1"] ))}}
+             {(( q["polynome2_ord"][0][0] )) + \cfrac{(( [q["polynome2_ord"][1]]|Polynome("n") ))}{n^(( q["degre2"] ))} + \cfrac{(( [q["polynome2_ord"][2]]|Polynome("n") ))}{n^(( q["degre2"] ))}}
+          &= (( [[1, q["degre1"] - q["degre2"]]]|Polynome("n") )) \times \cfrac{(( q["polynome1_ord"][0][0] )) + \cfrac{(( [[q["polynome1_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre1"] - q["polynome1_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome1_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre1"] - q["polynome1_ord"][2][1]]]|Polynome("n") ))}}
+             {(( q["polynome2_ord"][0][0] )) + \cfrac{(( [[q["polynome2_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre2"] - q["polynome2_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome2_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre2"] - q["polynome2_ord"][2][1]]]|Polynome("n") ))}}
+    \end{aligned}$
+
+    Nous savons que $\lim\limits_{n\to{}+\infty} (( [[1, q["degre1"] - q["degre2"]]]|Polynome("n") )) = +\infty$.
+
+    Par quotient, $\lim\limits_{n\to{}+\infty} \cfrac{ (( q["polynome1_ord"][0][0] )) + \cfrac{(( [[q["polynome1_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre1"] - q["polynome1_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome1_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre1"] - q["polynome1_ord"][2][1]]]|Polynome("n") ))}}{ (( q["polynome2_ord"][0][0] )) + \cfrac{(( [[q["polynome2_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre2"] - q["polynome2_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome2_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre2"] - q["polynome2_ord"][2][1]]]|Polynome("n") ))}} = (( q["lim"] ))$.
+
+    Par produit, on en déduit que $\lim\limits_{n\to{}+\infty} (( q["suite"] )) = (* if q["l1"] == q["l2"] *) +\infty$. (* else *) -\infty$. (* endif *)
+
+    (* elif q["cas"] == 4 *)
+  \item $(( q["suite"] )) = \cfrac{(( q["polynome1_ord"] ))}{(( q["polynome2_ord"] ))}$
+
+    Nous pouvons conjecturer que $\lim\limits_{n\to{}+\infty} (( q["polynome1_ord"] )) = (( q["l1"] ))$ et $\lim\limits_{n\to{}+\infty} (( q["polynome2_ord"] )) = (( q["l2"] ))$.
+
+    Par quotient, on obtient une forme indéterminée.
+    Nous allons donc factoriser le numérateur et le dénominateur par leur terme de plus haut degré :
+    $n^(( q["degre1"] ))$ pour le numérateur et $n^(( q["degre2"] ))$ pour le dénominateur.
+
+    $\begin{aligned}[t]
+      (( q["suite"] )) &= \cfrac{n^(( q["degre1"] ))}{n^(( q["degre2"] ))} \times \cfrac{(( q["polynome1_ord"][0][0] )) + \cfrac{(( [q["polynome1_ord"][1]]|Polynome("n") ))}{n^(( q["degre1"] ))} + \cfrac{(( [q["polynome1_ord"][2]]|Polynome("n") ))}{n^(( q["degre1"] ))}}
+             {(( q["polynome2_ord"][0][0] )) + \cfrac{(( [q["polynome2_ord"][1]]|Polynome("n") ))}{n^(( q["degre2"] ))} + \cfrac{(( [q["polynome2_ord"][2]]|Polynome("n") ))}{n^(( q["degre2"] ))}}
+          &= \cfrac{1}{(( [[1, q["degre2"] - q["degre1"]]]|Polynome("n") ))} \times \cfrac{(( q["polynome1_ord"][0][0] )) + \cfrac{(( [[q["polynome1_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre1"] - q["polynome1_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome1_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre1"] - q["polynome1_ord"][2][1]]]|Polynome("n") ))}}
+             {(( q["polynome2_ord"][0][0] )) + \cfrac{(( [[q["polynome2_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre2"] - q["polynome2_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome2_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre2"] - q["polynome2_ord"][2][1]]]|Polynome("n") ))}}
+    \end{aligned}$
+
+    Nous savons que $\lim\limits_{n\to{}+\infty} \cfrac{1}{(( [[1, q["degre2"] - q["degre1"]]]|Polynome("n") ))} = 0$.
+
+    Par quotient, $\lim\limits_{n\to{}+\infty} \cfrac{ (( q["polynome1_ord"][0][0] )) + \cfrac{(( [[q["polynome1_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre1"] - q["polynome1_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome1_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre1"] - q["polynome1_ord"][2][1]]]|Polynome("n") ))}}{ (( q["polynome2_ord"][0][0] )) + \cfrac{(( [[q["polynome2_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre2"] - q["polynome2_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome2_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre2"] - q["polynome2_ord"][2][1]]]|Polynome("n") ))}} = (( q["lim"] ))$.
+
+    Par produit, on en déduit que $\lim\limits_{n\to{}+\infty} (( q["suite"] )) = 0$.
+
+    (* elif q["cas"] == 5 *)
+  \item $(( q["suite"] )) = \cfrac{(( q["polynome1_ord"] ))}{(( q["polynome2_ord"] ))}$
+
+    Nous pouvons conjecturer que $\lim\limits_{n\to{}+\infty} (( q["polynome1_ord"] )) = (( q["l1"] ))$ et $\lim\limits_{n\to{}+\infty} (( q["polynome2_ord"] )) = (( q["l2"] ))$.
+
+    Par quotient, on obtient une forme indéterminée.
+    Nous allons donc factoriser le numérateur et le dénominateur par leur terme de plus haut degré :
+    $n^(( q["degre1"] ))$ pour le numérateur et $n^(( q["degre2"] ))$ pour le dénominateur.
+
+    $\begin{aligned}[t]
+      (( q["suite"] )) &= \cfrac{n^(( q["degre1"] ))}{n^(( q["degre2"] ))} \times \cfrac{(( q["polynome1_ord"][0][0] )) + \cfrac{(( [q["polynome1_ord"][1]]|Polynome("n") ))}{n^(( q["degre1"] ))} + \cfrac{(( [q["polynome1_ord"][2]]|Polynome("n") ))}{n^(( q["degre1"] ))}}
+             {(( q["polynome2_ord"][0][0] )) + \cfrac{(( [q["polynome2_ord"][1]]|Polynome("n") ))}{n^(( q["degre2"] ))} + \cfrac{(( [q["polynome2_ord"][2]]|Polynome("n") ))}{n^(( q["degre2"] ))}}
+          &= 1 \times \cfrac{(( q["polynome1_ord"][0][0] )) + \cfrac{(( [[q["polynome1_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre1"] - q["polynome1_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome1_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre1"] - q["polynome1_ord"][2][1]]]|Polynome("n") ))}}
+             {(( q["polynome2_ord"][0][0] )) + \cfrac{(( [[q["polynome2_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre2"] - q["polynome2_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome2_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre2"] - q["polynome2_ord"][2][1]]]|Polynome("n") ))}}
+          &= \cfrac{(( q["polynome1_ord"][0][0] )) + \cfrac{(( [[q["polynome1_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre1"] - q["polynome1_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome1_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre1"] - q["polynome1_ord"][2][1]]]|Polynome("n") ))}}
+             {(( q["polynome2_ord"][0][0] )) + \cfrac{(( [[q["polynome2_ord"][1][0], 0]]|Polynome("n") ))}{(( [[1, q["degre2"] - q["polynome2_ord"][1][1]]]|Polynome("n") ))}+\cfrac{(( [[q["polynome2_ord"][2][0], 0]]|Polynome("n") ))}{(( [[1, q["degre2"] - q["polynome2_ord"][2][1]]]|Polynome("n") ))}}
+    \end{aligned}$
+
+    Par quotient, on en déduit que $\lim\limits_{n\to{}+\infty} (( q["suite"] )) = (( q["lim"] ))$.
+
+  (* endif *)
+  (* endfor *)
+\end{enumerate}

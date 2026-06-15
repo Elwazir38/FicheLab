@@ -1,0 +1,12 @@
+\exercice
+Effectuer les conversions suivantes :
+\begin{multicols}{3}\noindent
+\begin{enumerate}
+\item $\SI{96,5}{dam^3}=\dotfill\si{dm^3}$
+\item $\SI{59,8}{dam^3}=\dotfill\si{m^3}$
+\item $\SI{4,67}{dam^3}=\dotfill\si{hm^3}$
+\item $\SI{8,74}{dm^3}=\dotfill\si{mm^3}$
+\item $\SI{3,57}{dam^3}=\dotfill\si{km^3}$
+\item $\SI{8,48}{m^3}=\dotfill\si{dm^3}$
+\end{enumerate}
+\end{multicols}

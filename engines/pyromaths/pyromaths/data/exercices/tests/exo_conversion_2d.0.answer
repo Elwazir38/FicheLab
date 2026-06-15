@@ -1,0 +1,35 @@
+\exercice*
+\tikzstyle{fleche}=[overlay, line width=0.6pt, dotted, -Stealth, Maroon]
+\def\virgule{\textcolor{red}{ \LARGE ,}}
+Effectuer les conversions suivantes :
+\begin{multicols}{2}\noindent
+\begin{enumerate}
+\item $\SI{96,5}{dam^2}=\SI{965\,000}{dm^2}$\vspace{1ex}\par
+\item $\SI{59,8}{dam^2}=\SI{5\,980}{m^2}$\vspace{1ex}\par
+\item $\SI{4,67}{dam^2}=\SI{0,046\,7}{hm^2}$\vspace{1ex}\par
+\item $\SI{8,74}{dm^2}=\SI{87\,400}{mm^2}$\vspace{1ex}\par
+\item $\SI{3,57}{dam^2}=\SI{0,000\,357}{km^2}$\vspace{1ex}\par
+\item $\SI{8,48}{m^2}=\SI{848}{dm^2}$\vspace{1ex}\par
+\end{enumerate}
+\end{multicols}
+\begin{tabular}{*{13}{p{3.5mm}|}p{3.5mm}}
+ \multicolumn{2}{c|}{$\rm km^2$} & \multicolumn{2}{c|}{$\rm hm^2$} & \multicolumn{2}{c|}{$\rm dam^2$} & \multicolumn{2}{c|}{$\rm m^2$} & \multicolumn{2}{c|}{$\rm dm^2$} & \multicolumn{2}{c|}{$\rm cm^2$} &\multicolumn{2}{c}{$\rm mm^2$}\\ \hline
+\stepcounter{tikzmark}
+ & & & & \textcolor{blue}{9}& \textcolor{blue}{6}\tikzmarknode{virg0}{\ }& \textcolor{blue}{5}& \textcolor{red}{0}& \textcolor{red}{0}& {\textcolor{red}{0}\tikzmarknode{virg1}{\virgule}}& & & & 
+\tikz[remember picture] \draw[fleche] ($(pic cs:virg0)-(0, 1mm)$) -- ($(pic cs:virg1)-(0, 1mm)$); \\
+\stepcounter{tikzmark}
+ & & & & \textcolor{blue}{5}& \textcolor{blue}{9}\tikzmarknode{virg0}{\ }& \textcolor{blue}{8}& {\textcolor{red}{0}\tikzmarknode{virg1}{\virgule}}& & & & & & 
+\tikz[remember picture] \draw[fleche] ($(pic cs:virg0)-(0, 1mm)$) -- ($(pic cs:virg1)-(0, 1mm)$); \\
+\stepcounter{tikzmark}
+ & & & {\textcolor{red}{0}\tikzmarknode{virg1}{\virgule}}& \textcolor{red}{0}& \textcolor{blue}{4}\tikzmarknode{virg0}{\ }& \textcolor{blue}{6}& \textcolor{blue}{7}& & & & & & 
+\tikz[remember picture] \draw[fleche] ($(pic cs:virg0)-(0, 1mm)$) -- ($(pic cs:virg1)-(0, 1mm)$); \\
+\stepcounter{tikzmark}
+ & & & & & & & & & \textcolor{blue}{8}\tikzmarknode{virg0}{\ }& \textcolor{blue}{7}& \textcolor{blue}{4}& \textcolor{red}{0}& {\textcolor{red}{0}\tikzmarknode{virg1}{\virgule}}
+\tikz[remember picture] \draw[fleche] ($(pic cs:virg0)-(0, 1mm)$) -- ($(pic cs:virg1)-(0, 1mm)$); \\
+\stepcounter{tikzmark}
+ & {\textcolor{red}{0}\tikzmarknode{virg1}{\virgule}}& \textcolor{red}{0}& \textcolor{red}{0}& \textcolor{red}{0}& \textcolor{blue}{3}\tikzmarknode{virg0}{\ }& \textcolor{blue}{5}& \textcolor{blue}{7}& & & & & & 
+\tikz[remember picture] \draw[fleche] ($(pic cs:virg0)-(0, 1mm)$) -- ($(pic cs:virg1)-(0, 1mm)$); \\
+\stepcounter{tikzmark}
+ & & & & & & & \textcolor{blue}{8}\tikzmarknode{virg0}{\ }& \textcolor{blue}{4}& {\textcolor{blue}{8}\tikzmarknode{virg1}{\virgule}}& & & & 
+\tikz[remember picture] \draw[fleche] ($(pic cs:virg0)-(0, 1mm)$) -- ($(pic cs:virg1)-(0, 1mm)$); \\
+\end{tabular}
