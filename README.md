@@ -1,5 +1,7 @@
 # FicheLab
 
+[![CI](https://github.com/Elwazir38/FicheLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Elwazir38/FicheLab/actions/workflows/ci.yml)
+
 Composeur **visuel** de fiches d'exercices de maths, prêtes à imprimer en PDF.
 Il pilote le moteur public **MathALEA** (CoopMaths) : tu choisis des exercices
 dans un catalogue par niveau / thème, tu règles chaque exercice, et tu obtiens
