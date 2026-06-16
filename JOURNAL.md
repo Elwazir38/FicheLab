@@ -6,6 +6,35 @@ de code est dans `git` ; ici on capture le contexte décisionnel.
 
 ---
 
+## 2026-06-15 — Couche de prise en main (onboarding) sur une UI déjà aboutie
+
+**Pourquoi.** L'interface était déjà un design system fini (tokens `--brand-*`/`--amber-*`,
+gradients, animations sobres, accessibilité clavier). Le manque n'était pas esthétique mais
+**cognitif** : un nouvel utilisateur ouvre trois colonnes et ne sait pas par où commencer, ni
+ce que fait « graine », ni la différence entre les deux boutons PDF (le point le plus déroutant :
+MathALEA ouvre coopmaths.fr pour compiler, Pyromaths génère un PDF en local via LaTeX). On
+**n'a pas refait l'UI** — on a ajouté une couche de guidage qui s'y fond, **100 % additive et
+réversible**.
+
+**Ce qui a été ajouté.**
+- `web/onboarding.js` (nouveau, chargé après `app.js`) : panneau de bienvenue 1re visite réutilisant
+  `.modal`/`.modal-back`, mémorisé via `localStorage` clé `fichelab:onboarded` ; bouton « ⓘ Guide »
+  dans la topbar pour le rouvrir ; fermeture Échap + clic hors-modal (ces handlers n'existaient pas,
+  on les a posés localement sans toucher la modale existante) ; gestion du focus ; échappatoire
+  `?guide=skip` pour démos/captures.
+- `web/index.html` : bouton « ⓘ Guide », état vide `#fiche-empty` enrichi (« Étape ② »), note
+  explicative `#pdf-note` (« Étape ③ ») au-dessus de `.preview-foot`, `title=` sur vues + boutons PDF.
+- `web/app.js` : `title=` sur graine (= reproductibilité), Réglages avancés s/s2/s3, dans les
+  templates de `renderExoRow` (markup passif, survit aux re-renders, retrait propre).
+- `web/style.css` : section commentée « COUCHE PRISE EN MAIN » en fin de fichier, **zéro couleur
+  en dur**, uniquement des tokens existants ; placée avant le bloc `prefers-reduced-motion` qui
+  reste la dernière règle et continue de neutraliser toute animation.
+
+**Garde-fous.** `#preview-hint` est réécrit par `refreshPreview()` à chaque appel : on ne l'a donc
+pas édité (on a ajouté `#pdf-note` en élément frère). Offline préservé (aucun CDN/police distante).
+Vérifié en vrai sur `http://localhost:8010` (capture headless Chrome) : modale de bienvenue au 1er
+lancement, bouton Guide, note PDF, états vides parlants, tooltips servis.
+
 ## 2026-06-15 — CI pytest + publication GitHub
 
 **Levier.** Git venait d'être posé (entrée précédente) mais restait **local** :

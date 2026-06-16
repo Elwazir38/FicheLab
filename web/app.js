@@ -172,19 +172,19 @@ function renderExoRow(ex, i) {
   const ctrls = isPyro ? `
     <div class="ctrls">
       <span class="mini"><label>Nombre</label><input type="number" min="1" max="10" value="${ex.nb || 1}" data-f="nb"></span>
-      <span class="mini"><label>Graine</label><code>${ex.seed}</code>
-        <button class="btn small icon" data-act="reseed" title="Nouveau tirage">🎲</button></span>
+      <span class="mini"><label title="Graine = reproductibilité : même graine ⇒ exactement les mêmes énoncés à chaque génération.">Graine ⓘ</label><code title="Graine de tirage figée. Même graine ⇒ mêmes valeurs.">${ex.seed}</code>
+        <button class="btn small icon" data-act="reseed" title="Nouveau tirage aléatoire (change les valeurs des énoncés).">🎲</button></span>
     </div>` : `
     <div class="ctrls">
       <span class="mini"><label>Questions</label><input type="number" min="1" max="30" value="${ex.n}" data-f="n"></span>
-      <span class="mini"><label>Graine</label><code>${ex.alea}</code>
-        <button class="btn small icon" data-act="reseed" title="Nouveau tirage">🎲</button></span>
-      <button class="btn small ghost" data-act="adv">Réglages avancés ▾</button>
+      <span class="mini"><label title="Graine = reproductibilité : même graine ⇒ exactement les mêmes énoncés à chaque génération.">Graine ⓘ</label><code title="Graine de tirage figée. Même graine ⇒ mêmes valeurs.">${ex.alea}</code>
+        <button class="btn small icon" data-act="reseed" title="Nouveau tirage aléatoire (change les valeurs des énoncés).">🎲</button></span>
+      <button class="btn small ghost" data-act="adv" title="Paramètres supplémentaires (s, s2, s3) propres à l'exercice MathALEA : variantes, niveaux de difficulté, options.">Réglages avancés ▾</button>
     </div>
     <div class="adv">
-      <span class="mini"><label>s</label><input type="text" value="${ex.sup?.s ?? ""}" data-f="s"></span>
-      <span class="mini"><label>s2</label><input type="text" value="${ex.sup?.s2 ?? ""}" data-f="s2"></span>
-      <span class="mini"><label>s3</label><input type="text" value="${ex.sup?.s3 ?? ""}" data-f="s3"></span>
+      <span class="mini"><label title="Paramètre « sup » MathALEA : type/variante de l'exercice (selon l'exercice).">s</label><input type="text" value="${ex.sup?.s ?? ""}" data-f="s"></span>
+      <span class="mini"><label title="Paramètre « sup2 » MathALEA : 2ᵉ option (selon l'exercice).">s2</label><input type="text" value="${ex.sup?.s2 ?? ""}" data-f="s2"></span>
+      <span class="mini"><label title="Paramètre « sup3 » MathALEA : 3ᵉ option (selon l'exercice).">s3</label><input type="text" value="${ex.sup?.s3 ?? ""}" data-f="s3"></span>
     </div>`;
 
   el.innerHTML = `
