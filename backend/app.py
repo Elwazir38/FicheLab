@@ -15,12 +15,11 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from . import catalogue, fiches
-from .mathalea import VUE_APERCU, VUES, build_url
+from . import fiches
 
 WEB_DIR = Path(__file__).resolve().parent.parent / "web"
 
-app = FastAPI(title="FicheLab", version="1.0")
+app = FastAPI(title="FicheLab", version="2.0")
 
 # Utile si l'UI est ouverte depuis un autre port pendant le dev.
 # Restreint aux origines locales : empêche un site tiers d'appeler l'API
@@ -49,24 +48,6 @@ class FicheRequest(BaseModel):
 # --------------------------------------------------------------------------- #
 @app.get("/api/catalogue")
 def get_catalogue():
-    return catalogue.load_catalogue()
-
-
-@app.post("/api/fiche/preview")
-def preview(req: FicheRequest):
-    """Manifeste -> URL MathALEA (aperçu ou export selon `vue`)."""
-    vue = req.vue or VUE_APERCU
-    if vue not in VUES:
-        raise HTTPException(400, f"Vue inconnue : {vue}")
-    try:
-        url = build_url(req.fiche, vue)
-    except ValueError as exc:
-        raise HTTPException(400, str(exc)) from exc
-    return {"url": url, "vue": vue}
-
-
-@app.get("/api/catalogue/pyromaths")
-def get_catalogue_pyromaths():
     """Catalogue Pyromaths (chargé paresseusement — import lourd au 1er appel)."""
     from . import pyromaths_engine
     return {"niveaux": pyromaths_engine.list_exercices()}

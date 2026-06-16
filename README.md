@@ -3,33 +3,37 @@
 [![CI](https://github.com/Elwazir38/FicheLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Elwazir38/FicheLab/actions/workflows/ci.yml)
 
 Composeur **visuel** de fiches d'exercices de maths, prêtes à imprimer en PDF.
-Il pilote le moteur public **MathALEA** (CoopMaths) : tu choisis des exercices
-dans un catalogue par niveau / thème, tu règles chaque exercice, et tu obtiens
-une fiche complète avec corrigé — sans réinventer le générateur.
+Catalogue navigable par niveau, exercices ajoutés à la souris, mise en page
+réglable, **PDF généré en local** avec ton style maison — sans dépendre
+d'aucun service en ligne.
 
-> **Principe / licence.** FicheLab **n'embarque aucun code de MathALEA** (AGPL-3.0).
-> Il se contente de **composer des URLs** vers `coopmaths.fr/alea/`, comme un
-> signet intelligent. Le PDF est produit côté MathALEA.
+Le moteur de génération est **Pyromaths** (vendorisé sous GPLv3 dans
+`engines/pyromaths/`) : énoncés et corrigés détaillés produits par Python,
+compilés en PDF via une chaîne LaTeX locale.
 
-## Ce que ça fait (v1)
+## Ce que ça fait
 
-- Catalogue navigable **6e / 5e / 4e / 3e** (référentiels officiels MathALEA, thèmes + intitulés).
-- Constructeur de fiche : ajout, réordonnancement (glisser-déposer), nombre de
-  questions, réglages avancés (`s`, `s2`, `s3`), corrigé on/off, colonnes.
-- **Aperçu live** intégré (vue élève / diaporama / LaTeX).
-- **Génération PDF** en un clic (ouvre la page d'export de MathALEA).
-- Chaque fiche est un **fichier `.json` reproductible** (`fiches/`) : la graine
-  `alea` est figée, donc régénérer redonne exactement les mêmes énoncés/corrigés.
+- Catalogue navigable par niveau (Sixième → Troisième aujourd'hui ; CM1/CM2 et
+  Seconde en cours d'ajout).
+- Constructeur de fiche : ajout, réordonnancement (glisser-déposer), nombre
+  d'occurrences de chaque exercice, corrigé on/off.
+- **Génération PDF locale** en un clic, avec ton style (couleur, établissement,
+  police, en-tête élève).
+- Chaque fiche est un **fichier `.json` reproductible** (`fiches/`) : la `seed`
+  de chaque exercice est figée, donc régénérer redonne exactement les mêmes
+  énoncés et corrigés.
 - **CLI** pour régénérer une fiche sans ouvrir l'interface.
 
 ## Installation
 
-Prérequis : Python 3.11+ (testé sur 3.14).
+Prérequis : Python 3.11+ (testé sur 3.14) + une chaîne LaTeX (**MiKTeX** ou
+**TeX Live**) exposant `lualatex` et `latexmk` sur le `PATH`.
 
 ```powershell
 cd "C:\Users\rachi\OneDrive\Documents\FicheLab"
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install -e engines\pyromaths
 ```
 
 ## Lancer l'application
@@ -40,17 +44,14 @@ python -m venv .venv
 
 Puis ouvrir **http://localhost:8000**.
 
-## CLI (régénération)
+## CLI
 
 ```powershell
-# Construit l'URL d'une fiche et l'ouvre dans le navigateur
-.\.venv\Scripts\python.exe -m backend.cli build fiches\ma-fiche.json
+# Lister les exercices Pyromaths disponibles (filtres possibles)
+.\.venv\Scripts\python.exe -m backend.cli pyromaths-list --niveau Quatrième --search fraction
 
-# Affiche juste l'URL (sans ouvrir)
-.\.venv\Scripts\python.exe -m backend.cli url fiches\ma-fiche.json
-
-# Régénère tout un dossier de fiches
-.\.venv\Scripts\python.exe -m backend.cli build-all fiches\
+# Générer le PDF d'une fiche
+.\.venv\Scripts\python.exe -m backend.cli pyromaths-gen fiches\exemple-pyromaths-4e.json -o ma-fiche.pdf --open
 ```
 
 ## Tests
@@ -65,15 +66,18 @@ Puis ouvrir **http://localhost:8000**.
 ```
 FicheLab/
 ├── backend/
-│   ├── app.py          API FastAPI + service de l'UI
-│   ├── mathalea.py     manifeste -> URL MathALEA (cœur, testé)
-│   ├── catalogue.py    chargement des référentiels par niveau/thème
-│   ├── fiches.py       sauvegarde des manifestes .json
-│   ├── cli.py          régénération en ligne de commande
+│   ├── app.py               API FastAPI + service de l'UI
+│   ├── pyromaths_engine.py  catalogue + génération via Pyromaths
+│   ├── render.py            blocs -> LaTeX (template maison) -> PDF lualatex
+│   ├── style.py             chargement du style maison (styles/style.json)
+│   ├── fiches.py            sauvegarde des manifestes .json
+│   ├── cli.py               régénération en ligne de commande
 │   └── tests/
-├── data/mathalea_raw/  référentiels officiels MathALEA (source du catalogue)
+├── engines/pyromaths/  moteur Pyromaths vendorisé (GPLv3, gelé 2023 + 3 patchs Py3.14)
 ├── fiches/             tes fiches enregistrées (.json, versionnables)
-├── web/                interface (index.html, app.js, style.css)
+├── styles/             style.json + fiche.tex.j2 (gabarit LaTeX)
+├── fonts/              tes polices personnelles (facultatif)
+├── web/                interface (index.html, app.js, style.css, onboarding.js)
 └── requirements.txt
 ```
 
@@ -82,63 +86,39 @@ FicheLab/
 ```json
 {
   "version": 1,
-  "titre": "4ème — Fractions — Fiche 1",
-  "entete": { "classe": "4ème B", "date": "2026-06-15" },
-  "mise_en_page": { "colonnes": 2, "corrige": true, "vue": "eleve" },
+  "titre": "4ème — Calcul littéral — Pyromaths",
+  "niveau": "Quatrième",
+  "entete": { "classe": "4ème B", "date": "16/06/2026" },
+  "mise_en_page": { "corrige": true },
   "exercices": [
-    { "id": "4C21", "titre": "Additionner...", "source": "mathalea",
-      "n": 4, "sup": {}, "cd": null, "uuid": "ab12c", "alea": "VAQ7" }
+    { "source": "pyromaths", "name": "distributivite", "seed": 11, "nb": 1 },
+    { "source": "pyromaths", "name": "double_distributivite", "seed": 5, "nb": 1 }
   ]
 }
 ```
 
-`id` = code de l'exercice MathALEA · `n` = nombre de questions ·
-`sup` = réglages avancés · `alea`/`uuid` = graines figées (reproductibilité).
+`name` = identifiant Pyromaths (cf. `pyromaths-list`) · `seed` = graine figée
+(reproductible) · `nb` = nombre de copies de l'exercice · `source` reste
+explicite pour anticiper l'arrivée de moteurs complémentaires.
 
-## Pyromaths (génération 100 % locale, ton style)
+## Style maison
 
-Phase 2 : un second moteur, **Pyromaths** (vendorisé dans `engines/pyromaths`,
-GPLv3), qui génère les fiches **en local** avec corrigés très détaillés, **sans
-passer par aucun site**, rendues avec **ton template** (`styles/`).
+Le style se règle à deux endroits :
 
-Prérequis : une chaîne LaTeX (**MiKTeX** ou TeX Live) avec `lualatex` + `latexmk`.
-
-**Ton style** se règle à deux endroits :
-- `styles/style.json` : couleur principale, établissement, en-tête élève, police.
-- `fonts/` : dépose ton fichier `.ttf`/`.otf`, puis renseigne son nom dans
+- `styles/style.json` : couleur principale, établissement, police, en-tête élève.
+- `fonts/` : dépose ton `.ttf`/`.otf`, puis renseigne son nom dans
   `style.json` (`"police": "Nom De La Police"`). Sinon, police par défaut propre.
 - `styles/fiche.tex.j2` : le gabarit LaTeX complet, si tu veux pousser plus loin.
-
-Depuis l'interface : onglet **Pyromaths** dans le catalogue → ajoute des
-exercices → **« PDF Pyromaths (local) »**.
-
-Depuis **Claude Code / la CLI** :
-
-```powershell
-# Lister les exercices Pyromaths (filtres possibles)
-.\.venv\Scripts\python.exe -m backend.cli pyromaths-list --niveau Quatrième --search fraction
-
-# Générer le PDF stylé d'une fiche
-.\.venv\Scripts\python.exe -m backend.cli pyromaths-gen fiches\exemple-pyromaths-4e.json -o ma-fiche.pdf --open
-```
-
-Format d'une fiche Pyromaths (`exercices[].source = "pyromaths"`) :
-
-```json
-{ "titre": "4ème — Calcul littéral", "niveau": "Quatrième",
-  "entete": { "classe": "4ème B", "date": "16/06/2026" },
-  "mise_en_page": { "corrige": true },
-  "exercices": [ { "source": "pyromaths", "name": "distributivite", "seed": 11, "nb": 1 } ] }
-```
-
-`name` = identifiant Pyromaths (cf. `pyromaths-list`) · `seed` = graine figée
-(reproductible) · `nb` = nombre de copies de l'exercice.
 
 > Note de portage : Pyromaths est gelé (2023) ; trois patchs Python 3.14 sont
 > appliqués dans `engines/pyromaths` (voir `engines/README.md`).
 
 ## Feuille de route
 
-- **Fusion MathALEA + Pyromaths en un seul PDF** (prochaine étape) : capturer le
-  LaTeX MathALEA en local et le compiler avec Pyromaths sous le template maison.
-- Ajout des niveaux lycée MathALEA (déposer le référentiel dans `data/mathalea_raw/`).
+- **Ajouter CM1 / CM2** alignés sur le programme officiel cycle 3 (BO du
+  17 avril 2025, applicable rentrée 2025).
+- **Brancher Seconde** à partir des générateurs `engines/pyromaths/pyromaths/ex/lycee/`
+  réellement programme Seconde (tri à faire avec un sous-agent).
+- **Pipeline LLM local** (LM Studio + Gemma / Qwen-Coder) ciblé sur la taxonomie
+  BOEN, les contextes d'énoncés textuels et le boilerplate Python — pas sur la
+  génération mathématique elle-même, que la `seed` Pyromaths gère déjà.

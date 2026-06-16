@@ -1,16 +1,12 @@
 """CLI de régénération : rejoue un manifeste de fiche sans ouvrir l'UI.
 
 Exemples :
-    python -m backend.cli build fiches/4eme-fractions.json
-    python -m backend.cli build fiches/4eme-fractions.json --vue eleve --no-open
-    python -m backend.cli build-all fiches/
-    python -m backend.cli url fiches/4eme-fractions.json   # affiche juste l'URL
-
     python -m backend.cli pyromaths-list --niveau Quatrième
+    python -m backend.cli pyromaths-list --search fraction
     python -m backend.cli pyromaths-gen fiches/ma-fiche.json -o ma-fiche.pdf
 
-Grâce aux graines gelées (uuid/alea pour MathALEA, seed pour Pyromaths), une
-régénération redonne exactement la même fiche/PDF.
+Grâce aux graines gelées (`seed` dans chaque exercice), une régénération
+redonne exactement la même fiche / le même PDF.
 """
 from __future__ import annotations
 
@@ -20,20 +16,9 @@ import sys
 import webbrowser
 from pathlib import Path
 
-from .mathalea import VUE_EXPORT, build_url
-
 
 def _load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
-
-
-def _build_one(path: Path, vue: str, open_browser: bool) -> str:
-    fiche = _load(path)
-    url = build_url(fiche, vue)
-    print(f"{path.name}\n  {url}")
-    if open_browser:
-        webbrowser.open(url)
-    return url
 
 
 def _pyromaths_list(niveau: str | None, search: str | None) -> int:
@@ -53,7 +38,7 @@ def _pyromaths_list(niveau: str | None, search: str | None) -> int:
 
 
 def _pyromaths_selection(fiche: dict) -> list[dict]:
-    """Extrait du manifeste les exercices Pyromaths (ignore MathALEA en Étape A)."""
+    """Extrait du manifeste les exercices Pyromaths."""
     sel = []
     for ex in fiche.get("exercices", []):
         if ex.get("source") == "pyromaths" or ex.get("name"):
@@ -89,19 +74,8 @@ def _pyromaths_gen(manifest: Path, output: Path | None, open_pdf: bool, verbose:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="fichelab", description="Régénère des fiches MathALEA.")
+    parser = argparse.ArgumentParser(prog="fichelab", description="Régénère des fiches Pyromaths.")
     sub = parser.add_subparsers(dest="cmd", required=True)
-
-    for name in ("build", "url"):
-        p = sub.add_parser(name, help="Construit l'URL d'une fiche" + (" et l'ouvre" if name == "build" else ""))
-        p.add_argument("manifest", type=Path)
-        p.add_argument("--vue", default=VUE_EXPORT)
-        p.add_argument("--no-open", action="store_true", help="N'ouvre pas le navigateur")
-
-    pall = sub.add_parser("build-all", help="Régénère toutes les fiches d'un dossier")
-    pall.add_argument("dossier", type=Path)
-    pall.add_argument("--vue", default=VUE_EXPORT)
-    pall.add_argument("--no-open", action="store_true")
 
     plist = sub.add_parser("pyromaths-list", help="Liste les exercices Pyromaths")
     plist.add_argument("--niveau", default=None, help="Filtrer par niveau")
@@ -120,23 +94,6 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.cmd == "pyromaths-gen":
         return _pyromaths_gen(args.manifest, args.output, args.open, args.verbose)
-
-    if args.cmd in ("build", "url"):
-        open_browser = (args.cmd == "build") and not args.no_open
-        if not args.manifest.exists():
-            print(f"Introuvable : {args.manifest}", file=sys.stderr)
-            return 1
-        _build_one(args.manifest, args.vue, open_browser)
-        return 0
-
-    if args.cmd == "build-all":
-        fiches = sorted(args.dossier.glob("*.json"))
-        if not fiches:
-            print(f"Aucune fiche .json dans {args.dossier}", file=sys.stderr)
-            return 1
-        for p in fiches:
-            _build_one(p, args.vue, not args.no_open)
-        return 0
 
     return 0
 

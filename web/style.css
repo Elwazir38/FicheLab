@@ -244,21 +244,18 @@ button, input, select { font-family: inherit; font-size: inherit; color: inherit
 .search::placeholder { color: var(--ink-faint); }
 .search:focus { outline: none; border-color: var(--brand-400); box-shadow: var(--ring); }
 
-.src-tabs { display: flex; gap: 0; }
-.src-tabs button {
-  border: 1px solid var(--line); background: var(--surface); padding: 4px 11px;
-  cursor: pointer; font-size: 12px; font-weight: 600; transition: background .15s, color .15s;
-}
-.src-tabs button:first-child { border-radius: var(--r1) 0 0 var(--r1); }
-.src-tabs button:last-child { border-radius: 0 var(--r1) var(--r1) 0; border-left: none; }
-.src-tabs button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
-
 .badge-src {
   font-size: 9.5px; padding: 2px 7px; border-radius: 999px; font-weight: 700;
   letter-spacing: .3px; text-transform: uppercase; flex: none;
 }
 .badge-src.pyromaths { background: var(--amber-100); color: var(--amber-600); }
-.badge-src.mathalea { background: var(--brand-soft); color: var(--brand-700); }
+
+/* Colonne 3 « Génération » : bouton PDF principal centré en bas de la colonne. */
+.gen-body { display: flex; flex-direction: column; gap: 12px; }
+.gen-empty { text-align: center; padding: 18px 12px; color: var(--muted); }
+.gen-empty .big { font-size: 32px; margin-bottom: 6px; }
+.gen-actions { margin-top: auto; padding-top: 12px; display: flex; justify-content: center; }
+.btn.large { padding: 12px 22px; font-size: 15px; }
 
 .theme { margin-bottom: var(--s3); }
 .theme > summary {

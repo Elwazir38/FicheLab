@@ -2,7 +2,7 @@
 
 Une fiche EST un fichier. C'est le cœur « DX » du système : versionnable
 (OneDrive / git), duplicable à la main, régénérable par la CLI, et qui
-reproduit toujours le même PDF (grâce aux graines gelées par mathalea.py).
+reproduit toujours le même PDF (grâce aux graines gelées dans chaque exercice).
 """
 from __future__ import annotations
 

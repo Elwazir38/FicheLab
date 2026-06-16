@@ -45,9 +45,9 @@
         <li>
           <span class="gs-num">3</span>
           <div class="gs-body">
-            <strong>Visualise et génère</strong> dans l'<em>Aperçu</em> (à droite). Bascule entre les vues
-            Élève / Diaporama / LaTeX, puis exporte : <strong>PDF MathALEA</strong> (ouvre coopmaths.fr
-            pour compiler) ou <strong>PDF Pyromaths (local)</strong> (PDF hors-ligne, nécessite LaTeX).
+            <strong>Génère le PDF</strong> depuis la colonne <em>Génération</em> (à droite). Le moteur
+            <strong>Pyromaths</strong> produit énoncés + corrigés détaillés <strong>en local</strong>,
+            avec ton style maison. <em>Nécessite une chaîne LaTeX</em> (MiKTeX ou TeX Live).
           </div>
         </li>
       </ol>

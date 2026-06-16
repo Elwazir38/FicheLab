@@ -1,13 +1,10 @@
-"""Renderer unifié : blocs d'exercices -> LaTeX (template maison) -> PDF lualatex.
+"""Renderer : blocs d'exercices Pyromaths -> LaTeX (template maison) -> PDF lualatex.
 
-C'est le chemin commun aux deux moteurs :
-- Pyromaths : `bloc.enonce_tex` = exo.tex_statement(), `bloc.corrige_tex` = exo.tex_answer()
-- MathALEA (fusion) : blocs construits à partir du LaTeX capturé.
-
-On réutilise l'environnement Jinja de Pyromaths (délimiteurs (* *)/(( ))) et on
-compile via latexmk + lualatex (mêmes réglages que Pyromaths/System.py), mais
-avec NOTRE template `styles/fiche.tex.j2` et l'environnement complet (sinon
-MiKTeX refuse de compiler).
+Chaque bloc fournit `enonce_tex` (= `exo.tex_statement()`) et `corrige_tex`
+(= `exo.tex_answer()`). On réutilise l'environnement Jinja de Pyromaths
+(délimiteurs (* *)/(( ))) et on compile via latexmk + lualatex (mêmes réglages
+que Pyromaths/System.py), mais avec NOTRE template `styles/fiche.tex.j2` et
+l'environnement complet (sinon MiKTeX refuse de compiler).
 """
 from __future__ import annotations
 

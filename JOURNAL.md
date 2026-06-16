@@ -6,6 +6,59 @@ de code est dans `git` ; ici on capture le contexte décisionnel.
 
 ---
 
+## 2026-06-16 — Excision MathALEA : on devient mono-moteur Pyromaths
+
+**Pourquoi.** L'app avait deux moteurs : MathALEA (composeur d'URLs qui ouvre
+`coopmaths.fr` pour compiler) et Pyromaths (local). En usage réel, le moteur
+MathALEA cassait la promesse de l'app : il fallait *quitter* FicheLab pour finir
+le PDF côté CoopMaths. Rachid n'utilisait que la moitié locale. Choix : couper
+proprement la moitié MathALEA et repositionner le projet comme « moteur Pyromaths
+local + UI propre ». Le diff parle de lui-même : -32 fichiers (module, données
+brutes, scaffold de bibliothèque MathALEA, 17 fiches `.json` qui pointaient vers
+des `id` MathALEA inexistants après suppression).
+
+**Ce qui a été retiré.**
+- `backend/mathalea.py` (composition d'URL, spec dérivée de createURL.ts).
+- `backend/catalogue.py` (lisait `data/mathalea_raw/`).
+- `backend/tests/test_mathalea.py` (couvrait le builder d'URL).
+- `data/mathalea_raw/` (référentiels officiels + specs `.ts`).
+- `scripts/build_library.py` et `scripts/__init__.py` (scaffold de la
+  bibliothèque MathALEA, devenu sans objet).
+- 17 fiches collège auto-générées + la démo `demo-4eme-fractions.json`.
+- Côté UI : `src-tabs` MathALEA/Pyromaths, iframe d'aperçu live, onglets de vue
+  (Élève/Diaporama/LaTeX), bouton « PDF MathALEA », réglages avancés `s/s2/s3`.
+
+**Ce qui a été refondu.**
+- `backend/app.py` : route `/api/catalogue` retourne maintenant directement le
+  catalogue Pyromaths (`pyromaths_engine.list_exercices()`). Route
+  `/api/fiche/preview` et `/api/catalogue/pyromaths` retirées.
+- `backend/cli.py` : subcommandes `build` / `url` / `build-all` retirées ;
+  reste `pyromaths-list` et `pyromaths-gen`.
+- `backend/tests/test_bibliotheque.py` : ne valide plus les `id` MathALEA ;
+  contrôle structure minimale + présence du `name` Pyromaths.
+- `web/index.html` + `web/app.js` : moteur unique. La colonne 3 devient
+  « Génération » (note explicative + gros bouton « Générer le PDF »).
+- `web/onboarding.js` : étape ③ reformulée (plus de double bouton PDF).
+- `README.md`, `CLAUDE.md`, `AGENTS.md`, `RUNBOOK.md` : refonte. La feuille de
+  route pointe vers CM1/CM2 (BO 17 avril 2025) et la Seconde (à partir des
+  générateurs Pyromaths `lycee/` réellement programme Seconde).
+
+**Décision conservée.** Le champ `source` reste dans le format de fiche, même
+s'il vaut systématiquement `"pyromaths"` aujourd'hui. Raison : un moteur LLM
+local (contextes d'énoncés générés par Gemma / Qwen-Coder via LM Studio) est
+prévu en phase 4, et garder le discriminant maintenant évite une migration de
+format dans deux semaines.
+
+**Frontière de licence — clarifiée.** Plus aucune ambiguïté AGPL : il ne reste
+que Pyromaths (GPLv3, vendorisé) et le code maison sous GPLv3. La mention
+« n'embarque aucun code MathALEA (AGPL) » disparaît du README parce qu'il n'y
+a plus d'interaction du tout avec MathALEA — pas même par URL.
+
+**Garde-fous.** Commit cohérent en un seul `git commit` (recommandation
+d'advisor) pour que le diff reste lisible. Tests `backend/tests/` à relancer
+après cette session — adapter le seuil de `test_dossier_fiches_non_vide`
+(plus que 1 fiche livrée tant que la phase 3 CM1/CM2 n'est pas faite).
+
 ## 2026-06-15 — Couche de prise en main (onboarding) sur une UI déjà aboutie
 
 **Pourquoi.** L'interface était déjà un design system fini (tokens `--brand-*`/`--amber-*`,

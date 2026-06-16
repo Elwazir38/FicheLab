@@ -1,6 +1,7 @@
 /* ===========================================================================
    FicheLab — logique de l'interface (vanilla JS, sans dépendance)
    État central = un manifeste de fiche, identique au format sauvegardé .json.
+   Moteur unique : Pyromaths (génération PDF locale via LaTeX).
    =========================================================================== */
 "use strict";
 
@@ -10,27 +11,18 @@ const api = (path, opts) => fetch(path, opts).then(async (r) => {
   return r.json();
 });
 
-// Petit jeton aléatoire (uuid / graine alea) — figé dans le manifeste.
-const tok = (n = 5) =>
-  Array.from(crypto.getRandomValues(new Uint8Array(Math.ceil(n / 2))))
-    .map((b) => b.toString(16).padStart(2, "0")).join("").slice(0, n);
-
 const DRAFT_KEY = "fichelab:draft";
 
 // ---------------------------------------------------------------- état --- //
-let CATALOGUE = { niveaux: [] };          // MathALEA
-let PYROMATHS = null;                       // chargé paresseusement
-let catalogueSource = "mathalea";           // "mathalea" | "pyromaths"
+let CATALOGUE = { niveaux: [] };
 let activeLevel = null;
-let currentVue = "eleve";
-let previewTimer = null;
 
 function newFiche() {
   return {
     version: 1,
     titre: "",
     entete: { classe: "", date: "", etablissement: "", consignes: "" },
-    mise_en_page: { colonnes: 2, corrige: true, vue: "eleve" },
+    mise_en_page: { corrige: true },
     exercices: [],
   };
 }
@@ -44,32 +36,7 @@ function toast(msg, isErr = false) {
 }
 
 // ====================================================== CATALOGUE (gauche) //
-// Normalise les deux sources en : niveaux[{ niveau, label, themes:[{titre, exercices }] }]
-// où chaque exercice = { source, key, code, titre } (key/code dépend de la source).
-function normalizeCatalogue(source) {
-  if (source === "mathalea") {
-    return (CATALOGUE.niveaux || []).map((n) => ({
-      niveau: n.niveau, label: n.label,
-      themes: n.themes.map((t) => ({
-        titre: t.titre,
-        exercices: t.exercices.map((e) => ({ source: "mathalea", code: e.id, titre: e.titre })),
-      })),
-    }));
-  }
-  // pyromaths : un niveau = un seul groupe (pas de sous-thèmes)
-  return (PYROMATHS?.niveaux || []).map((n) => ({
-    niveau: n.niveau, label: n.niveau,
-    themes: [{ titre: n.niveau, exercices: n.exercices.map((e) => ({ source: "pyromaths", code: e.name, titre: e.description })) }],
-  }));
-}
-
-async function ensurePyromaths() {
-  if (PYROMATHS === null) {
-    PYROMATHS = { niveaux: [] };
-    PYROMATHS = await api("/api/catalogue/pyromaths");
-  }
-}
-
+// Le backend renvoie {niveaux: [{niveau, exercices: [{name, description}]}]}.
 async function loadCatalogue() {
   CATALOGUE = await api("/api/catalogue");
   activeLevel = CATALOGUE.niveaux[0]?.niveau || null;
@@ -77,25 +44,12 @@ async function loadCatalogue() {
   renderCatalogue();
 }
 
-async function switchSource(src) {
-  catalogueSource = src;
-  $("#src-tabs").querySelectorAll("button").forEach((b) => b.classList.toggle("active", b.dataset.src === src));
-  if (src === "pyromaths") {
-    try { await ensurePyromaths(); } catch (e) { toast("Catalogue Pyromaths indisponible : " + e.message, true); }
-  }
-  const cat = normalizeCatalogue(src);
-  activeLevel = cat[0]?.niveau || null;
-  renderLevelTabs();
-  renderCatalogue();
-}
-
 function renderLevelTabs() {
-  const cat = normalizeCatalogue(catalogueSource);
   const box = $("#level-tabs");
   box.innerHTML = "";
-  cat.forEach((n) => {
+  (CATALOGUE.niveaux || []).forEach((n) => {
     const b = document.createElement("button");
-    b.textContent = n.label;
+    b.textContent = n.niveau;
     b.className = n.niveau === activeLevel ? "active" : "";
     b.onclick = () => { activeLevel = n.niveau; renderLevelTabs(); renderCatalogue(); };
     box.appendChild(b);
@@ -105,58 +59,51 @@ function renderLevelTabs() {
 function renderCatalogue() {
   const box = $("#catalogue");
   const q = $("#search").value.trim().toLowerCase();
-  const cat = normalizeCatalogue(catalogueSource);
-  const niveau = cat.find((n) => n.niveau === activeLevel);
+  const groupe = (CATALOGUE.niveaux || []).find((n) => n.niveau === activeLevel);
   box.innerHTML = "";
-  if (!niveau) return;
+  if (!groupe) return;
 
-  niveau.themes.forEach((theme, ti) => {
-    const exos = theme.exercices.filter((e) =>
-      !q || e.titre.toLowerCase().includes(q) || e.code.toLowerCase().includes(q));
-    if (!exos.length) return;
+  const exos = groupe.exercices.filter((e) =>
+    !q || e.description.toLowerCase().includes(q) || e.name.toLowerCase().includes(q));
+  if (!exos.length) {
+    box.innerHTML = `<p class="empty-sub" style="padding:12px">Aucun exercice ne correspond à « ${escapeHtml(q)} » dans ${escapeHtml(groupe.niveau)}.</p>`;
+    return;
+  }
 
-    const details = document.createElement("details");
-    details.className = "theme";
-    details.open = !!q || ti < 2 || catalogueSource === "pyromaths";
-    const sum = document.createElement("summary");
-    sum.innerHTML = `${escapeHtml(theme.titre)}<span class="count">${exos.length}</span>`;
-    details.appendChild(sum);
+  const details = document.createElement("details");
+  details.className = "theme";
+  details.open = true;
+  const sum = document.createElement("summary");
+  sum.innerHTML = `${escapeHtml(groupe.niveau)}<span class="count">${exos.length}</span>`;
+  details.appendChild(sum);
 
-    exos.forEach((e) => {
-      const card = document.createElement("div");
-      card.className = "exo-card";
-      card.innerHTML = `<span class="code">${e.code}</span><span class="titre">${escapeHtml(e.titre)}</span>`;
-      const add = document.createElement("button");
-      add.className = "btn small icon add"; add.textContent = "＋"; add.title = "Ajouter à la fiche";
-      add.onclick = () => addExercice(e);
-      card.appendChild(add);
-      details.appendChild(card);
-    });
-    box.appendChild(details);
+  exos.forEach((e) => {
+    const card = document.createElement("div");
+    card.className = "exo-card";
+    card.innerHTML = `<span class="code">${escapeHtml(e.name)}</span><span class="titre">${escapeHtml(e.description)}</span>`;
+    const add = document.createElement("button");
+    add.className = "btn small icon add"; add.textContent = "＋"; add.title = "Ajouter à la fiche";
+    add.onclick = () => addExercice(e);
+    card.appendChild(add);
+    details.appendChild(card);
   });
+  box.appendChild(details);
 }
 
 // ======================================================= FICHE (centre) === //
 function addExercice(e) {
-  if (e.source === "pyromaths") {
-    fiche.exercices.push({
-      source: "pyromaths", name: e.code, titre: e.titre,
-      nb: 1, seed: Math.floor(Math.random() * 1e9), // graine figée -> reproductible
-    });
-  } else {
-    fiche.exercices.push({
-      source: "mathalea", id: e.code, titre: e.titre,
-      n: 2, sup: {}, cd: null, uuid: tok(5), alea: tok(4),
-    });
-  }
-  renderFiche(); schedulePreview(); saveDraft();
-  toast(`Ajouté : ${e.code}`);
+  fiche.exercices.push({
+    source: "pyromaths", name: e.name, titre: e.description,
+    nb: 1, seed: Math.floor(Math.random() * 1e9), // graine figée -> reproductible
+  });
+  renderFiche(); saveDraft();
+  toast(`Ajouté : ${e.name}`);
 }
 
 function renderFiche() {
-  // méta
   $("#exo-count").textContent = fiche.exercices.length;
   $("#fiche-empty").style.display = fiche.exercices.length ? "none" : "block";
+  $("#gen-empty").style.display = fiche.exercices.length ? "none" : "block";
 
   const box = $("#fiche-exos");
   box.innerHTML = "";
@@ -166,62 +113,29 @@ function renderFiche() {
 function renderExoRow(ex, i) {
   const el = document.createElement("div");
   el.className = "fiche-exo"; el.draggable = true; el.dataset.i = i;
-  const isPyro = ex.source === "pyromaths";
-  const code = isPyro ? ex.name : ex.id;
-
-  const ctrls = isPyro ? `
-    <div class="ctrls">
-      <span class="mini"><label>Nombre</label><input type="number" min="1" max="10" value="${ex.nb || 1}" data-f="nb"></span>
-      <span class="mini"><label title="Graine = reproductibilité : même graine ⇒ exactement les mêmes énoncés à chaque génération.">Graine ⓘ</label><code title="Graine de tirage figée. Même graine ⇒ mêmes valeurs.">${ex.seed}</code>
-        <button class="btn small icon" data-act="reseed" title="Nouveau tirage aléatoire (change les valeurs des énoncés).">🎲</button></span>
-    </div>` : `
-    <div class="ctrls">
-      <span class="mini"><label>Questions</label><input type="number" min="1" max="30" value="${ex.n}" data-f="n"></span>
-      <span class="mini"><label title="Graine = reproductibilité : même graine ⇒ exactement les mêmes énoncés à chaque génération.">Graine ⓘ</label><code title="Graine de tirage figée. Même graine ⇒ mêmes valeurs.">${ex.alea}</code>
-        <button class="btn small icon" data-act="reseed" title="Nouveau tirage aléatoire (change les valeurs des énoncés).">🎲</button></span>
-      <button class="btn small ghost" data-act="adv" title="Paramètres supplémentaires (s, s2, s3) propres à l'exercice MathALEA : variantes, niveaux de difficulté, options.">Réglages avancés ▾</button>
-    </div>
-    <div class="adv">
-      <span class="mini"><label title="Paramètre « sup » MathALEA : type/variante de l'exercice (selon l'exercice).">s</label><input type="text" value="${ex.sup?.s ?? ""}" data-f="s"></span>
-      <span class="mini"><label title="Paramètre « sup2 » MathALEA : 2ᵉ option (selon l'exercice).">s2</label><input type="text" value="${ex.sup?.s2 ?? ""}" data-f="s2"></span>
-      <span class="mini"><label title="Paramètre « sup3 » MathALEA : 3ᵉ option (selon l'exercice).">s3</label><input type="text" value="${ex.sup?.s3 ?? ""}" data-f="s3"></span>
-    </div>`;
+  const code = ex.name;
 
   el.innerHTML = `
     <div class="row1">
       <span class="grip" title="Glisser pour réordonner">⠿</span>
-      <span class="badge-src ${isPyro ? "pyromaths" : "mathalea"}">${isPyro ? "Pyromaths" : "MathALEA"}</span>
-      <span class="code">${code}</span>
+      <span class="badge-src pyromaths">Pyromaths</span>
+      <span class="code">${escapeHtml(code)}</span>
       <span class="titre">${escapeHtml(ex.titre || code)}</span>
       <button class="btn small icon" data-act="up" title="Monter">↑</button>
       <button class="btn small icon" data-act="down" title="Descendre">↓</button>
       <button class="btn small icon" data-act="del" title="Retirer">✕</button>
-    </div>${ctrls}`;
+    </div>
+    <div class="ctrls">
+      <span class="mini"><label>Nombre</label><input type="number" min="1" max="10" value="${ex.nb || 1}" data-f="nb"></span>
+      <span class="mini"><label title="Graine = reproductibilité : même graine ⇒ exactement les mêmes énoncés à chaque génération.">Graine ⓘ</label><code title="Graine de tirage figée. Même graine ⇒ mêmes valeurs.">${ex.seed}</code>
+        <button class="btn small icon" data-act="reseed" title="Nouveau tirage aléatoire (change les valeurs des énoncés).">🎲</button></span>
+    </div>`;
 
-  // actions communes
   el.querySelector('[data-act=del]').onclick = () => { fiche.exercices.splice(i, 1); commit(); };
   el.querySelector('[data-act=up]').onclick = () => move(i, -1);
   el.querySelector('[data-act=down]').onclick = () => move(i, +1);
-
-  if (isPyro) {
-    el.querySelector('[data-act=reseed]').onclick = () => { ex.seed = Math.floor(Math.random() * 1e9); commit(); };
-    el.querySelector('[data-f=nb]').onchange = (e) => { ex.nb = parseInt(e.target.value) || 1; commit(false); };
-  } else {
-    el.querySelector('[data-act=reseed]').onclick = () => { ex.alea = tok(4); commit(); };
-    el.querySelector('[data-act=adv]').onclick = (e) => {
-      el.querySelector('.adv').classList.toggle('open');
-      e.target.textContent = el.querySelector('.adv').classList.contains('open') ? "Réglages avancés ▴" : "Réglages avancés ▾";
-    };
-    el.querySelector('[data-f=n]').onchange = (e) => { ex.n = parseInt(e.target.value) || 1; commit(false); };
-    ["s", "s2", "s3"].forEach((k) => {
-      el.querySelector(`[data-f=${k}]`).onchange = (e) => {
-        ex.sup = ex.sup || {};
-        if (e.target.value.trim() === "") delete ex.sup[k];
-        else ex.sup[k] = e.target.value.trim();
-        commit(false);
-      };
-    });
-  }
+  el.querySelector('[data-act=reseed]').onclick = () => { ex.seed = Math.floor(Math.random() * 1e9); commit(); };
+  el.querySelector('[data-f=nb]').onchange = (e) => { ex.nb = parseInt(e.target.value) || 1; commit(false); };
 
   // drag & drop
   el.addEventListener("dragstart", () => { el.classList.add("dragging"); el.dataset.drag = "1"; });
@@ -247,10 +161,9 @@ function move(i, delta) {
   commit();
 }
 
-// rerender + preview + autosave
 function commit(rerender = true) {
   if (rerender) renderFiche();
-  schedulePreview(); saveDraft();
+  saveDraft();
 }
 
 // méta -> fiche
@@ -258,63 +171,14 @@ function bindMeta() {
   $("#f-titre").oninput = (e) => { fiche.titre = e.target.value; saveDraft(); };
   $("#f-classe").oninput = (e) => { fiche.entete.classe = e.target.value; saveDraft(); };
   $("#f-date").onchange = (e) => { fiche.entete.date = e.target.value; saveDraft(); };
-  $("#f-cols").onchange = (e) => { fiche.mise_en_page.colonnes = parseInt(e.target.value); schedulePreview(); saveDraft(); };
-  $("#f-corrige").onchange = (e) => { fiche.mise_en_page.corrige = e.target.checked; schedulePreview(); saveDraft(); };
+  $("#f-corrige").onchange = (e) => { fiche.mise_en_page.corrige = e.target.checked; saveDraft(); };
 }
 
 function syncMetaInputs() {
   $("#f-titre").value = fiche.titre || "";
   $("#f-classe").value = fiche.entete?.classe || "";
   $("#f-date").value = fiche.entete?.date || "";
-  $("#f-cols").value = String(fiche.mise_en_page?.colonnes || 2);
   $("#f-corrige").checked = fiche.mise_en_page?.corrige !== false;
-}
-
-// ====================================================== APERÇU (droite) === //
-function schedulePreview() {
-  clearTimeout(previewTimer);
-  previewTimer = setTimeout(refreshPreview, 500);
-}
-
-async function buildUrl(vue) {
-  const { url } = await api("/api/fiche/preview", {
-    method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ fiche, vue }),
-  });
-  return url;
-}
-
-function countBySource(src) {
-  return fiche.exercices.filter((e) => (e.source || "mathalea") === src).length;
-}
-
-async function refreshPreview() {
-  const hint = $("#preview-hint");
-  if (!countBySource("mathalea")) {
-    $("#preview").src = "about:blank";
-    hint.style.display = "flex";
-    hint.textContent = countBySource("pyromaths")
-      ? "Aperçu live = MathALEA uniquement. Pour les exercices Pyromaths, utilise « PDF Pyromaths (local) »."
-      : "L'aperçu apparaîtra ici dès qu'un exercice MathALEA est ajouté.";
-    return;
-  }
-  try {
-    const url = await buildUrl(currentVue);
-    $("#preview").src = url;
-    hint.style.display = "none";
-  } catch (err) {
-    hint.style.display = "flex"; hint.textContent = "Erreur d'aperçu : " + err.message;
-  }
-}
-
-function bindViewTabs() {
-  $("#view-tabs").querySelectorAll("button").forEach((b) => {
-    b.onclick = () => {
-      currentVue = b.dataset.vue;
-      $("#view-tabs").querySelectorAll("button").forEach((x) => x.classList.toggle("active", x === b));
-      refreshPreview();
-    };
-  });
 }
 
 // ====================================================== ACTIONS FICHE ===== //
@@ -331,23 +195,14 @@ async function enregistrer() {
 }
 
 function nouvelle() {
-  fiche = newFiche(); syncMetaInputs(); renderFiche(); refreshPreview(); saveDraft();
+  fiche = newFiche(); syncMetaInputs(); renderFiche(); saveDraft();
   toast("Nouvelle fiche");
 }
 
 function dupliquer() {
   fiche.titre = (fiche.titre || "Fiche") + " (copie)";
-  // Nouvelles graines pour de vraies variantes : la graine qui détermine les
-  // valeurs est `alea` (MathALEA) ou `seed` (Pyromaths) — régénérer le seul
-  // `uuid` laissait des énoncés identiques.
-  fiche.exercices.forEach((ex) => {
-    ex.uuid = tok(5);
-    if ((ex.source || "mathalea") === "pyromaths") {
-      ex.seed = Math.floor(Math.random() * 1e9);
-    } else {
-      ex.alea = tok(4);
-    }
-  });
+  // Nouvelles graines pour de vraies variantes — même fiche, valeurs renouvelées.
+  fiche.exercices.forEach((ex) => { ex.seed = Math.floor(Math.random() * 1e9); });
   syncMetaInputs(); renderFiche(); toast("Fiche dupliquée — pense à enregistrer");
 }
 
@@ -364,7 +219,7 @@ async function ouvrirCharger() {
     load.onclick = async () => {
       fiche = await api("/api/fiche/" + f.slug);
       $("#modal-charger").classList.remove("open");
-      syncMetaInputs(); renderFiche(); refreshPreview(); saveDraft();
+      syncMetaInputs(); renderFiche(); saveDraft();
       toast("Chargée : " + f.titre);
     };
     const del = document.createElement("button"); del.className = "btn small ghost"; del.textContent = "🗑";
@@ -379,20 +234,13 @@ async function ouvrirCharger() {
   $("#modal-charger").classList.add("open");
 }
 
-async function genererPdf() {
-  if (!countBySource("mathalea")) { toast("Aucun exercice MathALEA.", true); return; }
-  const url = await buildUrl("latex");
-  window.open(url, "_blank");
-  toast("Page LaTeX ouverte — clique sur « Compiler / Télécharger PDF ».");
-}
-
 function simpleSlug(s) {
   return (s || "fiche").normalize("NFD").replace(/[̀-ͯ]/g, "")
     .replace(/[^\w\s-]/g, "").trim().toLowerCase().replace(/[\s_]+/g, "-") || "fiche";
 }
 
 async function genererPdfLocal() {
-  if (!countBySource("pyromaths")) { toast("Aucun exercice Pyromaths dans la fiche.", true); return; }
+  if (!fiche.exercices.length) { toast("Aucun exercice dans la fiche.", true); return; }
   toast("Génération locale en cours…");
   try {
     const r = await fetch("/api/generate/pyromaths", {
@@ -406,7 +254,7 @@ async function genererPdfLocal() {
     a.href = url; a.download = simpleSlug(fiche.titre) + ".pdf";
     document.body.appendChild(a); a.click(); a.remove();
     URL.revokeObjectURL(url);
-    toast("PDF Pyromaths téléchargé.");
+    toast("PDF téléchargé.");
   } catch (err) { toast("Échec : " + err.message, true); }
 }
 
@@ -428,22 +276,17 @@ function escapeHtml(s) {
 // --------------------------------------------------------------- init ----- //
 async function init() {
   loadDraft();
-  bindMeta(); bindViewTabs();
+  bindMeta();
   $("#search").oninput = renderCatalogue;
   $("#btn-enregistrer").onclick = enregistrer;
   $("#btn-nouvelle").onclick = nouvelle;
   $("#btn-dupliquer").onclick = dupliquer;
   $("#btn-charger").onclick = ouvrirCharger;
   $("#modal-close").onclick = () => $("#modal-charger").classList.remove("open");
-  $("#btn-refresh").onclick = refreshPreview;
-  $("#btn-onglet").onclick = async () => window.open(await buildUrl(currentVue), "_blank");
-  $("#btn-pdf").onclick = genererPdf;
   $("#btn-pdf-local").onclick = genererPdfLocal;
-  $("#src-tabs").querySelectorAll("button").forEach((b) => { b.onclick = () => switchSource(b.dataset.src); });
 
   syncMetaInputs(); renderFiche();
   try { await loadCatalogue(); } catch (e) { toast("Catalogue indisponible : " + e.message, true); }
-  refreshPreview();
 }
 
 init();

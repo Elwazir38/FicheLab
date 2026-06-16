@@ -11,7 +11,7 @@
   <div class="ambient" aria-hidden="true"></div>
   <header class="topbar">
     <div class="brand">Fiche<span>Lab</span></div>
-    <div class="tagline">Compose tes fiches d'exercices — moteur MathALEA · PDF prêt à imprimer</div>
+    <div class="tagline">Compose tes fiches d'exercices — moteur Pyromaths · PDF local prêt à imprimer</div>
     <div class="spacer"></div>
     <div class="actions">
       <button class="btn ghost small" id="btn-guide" title="Revoir le guide de prise en main">ⓘ Guide</button>
@@ -26,13 +26,7 @@
     <!-- Colonne 1 : catalogue -->
     <section class="col">
       <div class="col-head">
-        <div style="display:flex;align-items:center;gap:8px">
-          <h2 style="margin:0">Catalogue <span class="step-anchor" title="Étape ① : choisis tes exercices ici.">①</span></h2>
-          <div class="src-tabs" id="src-tabs" style="margin-left:auto">
-            <button data-src="mathalea" class="active">MathALEA</button>
-            <button data-src="pyromaths">Pyromaths</button>
-          </div>
-        </div>
+        <h2 style="margin:0">Catalogue <span class="step-anchor" title="Étape ① : choisis tes exercices ici.">①</span></h2>
         <div class="level-tabs" id="level-tabs"></div>
         <input class="search" id="search" type="search" placeholder="Rechercher un exercice, un code…">
       </div>
@@ -41,7 +35,7 @@
 
     <!-- Colonne 2 : constructeur -->
     <section class="col">
-      <div class="col-head"><h2>Fiche</h2></div>
+      <div class="col-head"><h2>Fiche <span class="step-anchor" title="Étape ② : règle ta fiche ici.">②</span></h2></div>
       <div class="col-body">
         <div class="fiche-meta">
           <div class="field full">
@@ -56,14 +50,6 @@
             <label for="f-date">Date</label>
             <input id="f-date" type="date">
           </div>
-          <div class="field">
-            <label for="f-cols">Colonnes</label>
-            <select id="f-cols">
-              <option value="1">1 colonne</option>
-              <option value="2" selected>2 colonnes</option>
-              <option value="3">3 colonnes</option>
-            </select>
-          </div>
           <div class="field toggle">
             <input id="f-corrige" type="checkbox" checked>
             <label for="f-corrige">Inclure le corrigé détaillé</label>
@@ -77,37 +63,30 @@
         <div class="empty" id="fiche-empty">
           <div class="big">🧮</div>
           <strong>Étape ② — Compose ta fiche</strong>
-          <div class="empty-sub">Clique sur un exercice du <strong>Catalogue</strong> (à gauche) pour l'ajouter ici, puis règle le nombre de questions, la graine et le corrigé. L'<strong>Aperçu</strong> (à droite) se met à jour tout seul.</div>
+          <div class="empty-sub">Clique sur un exercice du <strong>Catalogue</strong> (à gauche) pour l'ajouter ici, puis règle le nombre d'occurrences et la graine. Lance ensuite la génération à droite.</div>
         </div>
       </div>
     </section>
 
-    <!-- Colonne 3 : aperçu -->
+    <!-- Colonne 3 : génération -->
     <section class="col">
       <div class="col-head">
-        <h2>Aperçu</h2>
-        <div class="view-tabs" id="view-tabs">
-          <button data-vue="eleve" class="active" title="Vue mise en page « fiche élève » : énoncés (et corrigé) prêts à imprimer.">Élève</button>
-          <button data-vue="diaporama" title="Vue diaporama : un exercice par écran, pour projeter en classe.">Diaporama</button>
-          <button data-vue="latex" title="Vue source LaTeX, base de l'export PDF MathALEA.">LaTeX / PDF</button>
+        <h2>Génération <span class="step-anchor" title="Étape ③ : génère le PDF en local.">③</span></h2>
+      </div>
+      <div class="col-body gen-body">
+        <div class="preview-note" id="pdf-note">
+          <span class="pdf-note-ico" aria-hidden="true">ⓘ</span>
+          <span><strong>Étape ③ — PDF généré en local, hors-ligne.</strong>
+          Le moteur Pyromaths produit énoncés + corrigés détaillés directement ici, avec ton style maison (couleur, établissement, police). <em>Nécessite une chaîne LaTeX installée</em> (MiKTeX ou TeX Live, exposant <code>lualatex</code> et <code>latexmk</code>).</span>
         </div>
-      </div>
-      <div class="preview-wrap">
-        <iframe id="preview" title="Aperçu MathALEA"></iframe>
-        <div class="preview-hint" id="preview-hint">L'aperçu apparaîtra ici dès qu'un exercice est ajouté.</div>
-      </div>
-      <div class="preview-note" id="pdf-note">
-        <span class="pdf-note-ico" aria-hidden="true">ⓘ</span>
-        <span><strong>Étape ③ — Deux façons d'obtenir le PDF.</strong>
-        <strong>PDF MathALEA</strong> ouvre la page coopmaths.fr où tu cliques sur « Compiler / Télécharger ».
-        <strong>PDF Pyromaths (local)</strong> génère le PDF directement ici, hors-ligne (nécessite une chaîne LaTeX installée).</span>
-      </div>
-      <div class="preview-foot">
-        <button class="btn small ghost" id="btn-refresh" title="Recharger l'aperçu avec les réglages actuels.">↻ Rafraîchir</button>
-        <div class="spacer"></div>
-        <button class="btn small" id="btn-onglet" title="Ouvrir l'aperçu dans un nouvel onglet du navigateur.">↗ Ouvrir dans un onglet</button>
-        <button class="btn" id="btn-pdf" title="Compose une URL MathALEA et ouvre coopmaths.fr : clique ensuite sur « Compiler / Télécharger PDF ».">📄 PDF MathALEA</button>
-        <button class="btn ok" id="btn-pdf-local" title="Génère le PDF en local via Pyromaths (nécessite une chaîne LaTeX comme MiKTeX / TeX Live).">📄 PDF Pyromaths (local)</button>
+        <div class="gen-empty" id="gen-empty">
+          <div class="big">📄</div>
+          <strong>Aucun exercice à générer</strong>
+          <div class="empty-sub">Ajoute au moins un exercice à ta fiche pour activer la génération.</div>
+        </div>
+        <div class="gen-actions">
+          <button class="btn ok large" id="btn-pdf-local" title="Génère le PDF en local via Pyromaths (nécessite MiKTeX / TeX Live).">📄 Générer le PDF</button>
+        </div>
       </div>
     </section>
   </main>
